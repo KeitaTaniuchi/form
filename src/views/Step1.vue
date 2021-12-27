@@ -14,11 +14,12 @@
     </div>
 
     <h2>-生年月日-</h2>
-    <div>
-      <select id="select_year" name="year"></select>年
-      <select id="select_month" name="month"></select>月
-      <select id="select_day" name="day"></select>日
-    </div>
+    <select id="year" v-model="year">
+      <option v-for="nengo in nengoes" :key="nengo.year" :value="nengo.year">
+        {{ nengo.label }}
+      </option>
+    </select>
+    
   </div>
 </template>
 
@@ -26,8 +27,39 @@
 </style>
 
 <script>
-export default {
+/* export default {
   name: "STEP1",
   data: () => {},
+}; */
+
+export default {
+  data() {
+    return {
+      year: 2000,
+      month: 1,
+      date: 1,
+      nengoes: [],
+    };
+  },
+  mounted() {
+    this.nengoes = this.genereate();
+  },
+  methods: {
+    genereate() {
+      const nengoes = [];
+      for (let y = 2020; y > 1920; y--) {
+        if (y > 2018) {
+          nengoes.push({ year: y, label: `${y} (令和${y - 2018}年)` });
+        } else if (y > 1988) {
+          nengoes.push({ year: y, label: `${y} (平成${y - 1988}年)` });
+        } else if (y > 1925) {
+          nengoes.push({ year: y, label: `${y} (昭和${y - 1925}年)` });
+        } else if (y > 1911) {
+          nengoes.push({ year: y, label: `${y} (大正${y - 1911}年)` });
+        }
+      }
+      return nengoes;
+    },
+  },
 };
 </script>
