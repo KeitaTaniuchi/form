@@ -15,11 +15,20 @@
 
     <h2>-生年月日-</h2>
     <select id="year" v-model="year">
-      <option v-for="nengo in nengoes" :key="nengo.year" :value="nengo.year">
-        {{ nengo.label }}
+      <option v-for="imperialEra in yearsArr" :key="imperialEra.year">
+        {{ imperialEra.label }}
       </option>
-    </select>
-    
+    </select>年
+    <select id="month" v-model="month">
+      <option v-for="month in monthsArr" :key="month">
+        {{ month }}
+      </option>
+    </select>月
+    <select id="date" v-model="date">
+      <option v-for="date in datesArr" :key="date">
+        {{ date }}
+      </option>
+    </select>日
   </div>
 </template>
 
@@ -27,38 +36,52 @@
 </style>
 
 <script>
-/* export default {
-  name: "STEP1",
-  data: () => {},
-}; */
-
 export default {
   data() {
     return {
-      year: 2000,
-      month: 1,
-      date: 1,
-      nengoes: [],
+      year: "",
+      month: "",
+      date: "",
+      yearsArr: [],
+      monthsArr: [],
+      datesArr: [],
     };
   },
   mounted() {
-    this.nengoes = this.genereate();
+    this.yearsArr = this.createYears();
+    this.monthsArr = this.createMonths();
+    this.datesArr = this.createDates();
   },
   methods: {
-    genereate() {
-      const nengoes = [];
-      for (let y = 2020; y > 1920; y--) {
-        if (y > 2018) {
-          nengoes.push({ year: y, label: `${y} (令和${y - 2018}年)` });
-        } else if (y > 1988) {
-          nengoes.push({ year: y, label: `${y} (平成${y - 1988}年)` });
-        } else if (y > 1925) {
-          nengoes.push({ year: y, label: `${y} (昭和${y - 1925}年)` });
-        } else if (y > 1911) {
-          nengoes.push({ year: y, label: `${y} (大正${y - 1911}年)` });
+    createYears() {
+      const yearsArr = [];
+      let getNowYear = new Date().getFullYear();
+      for (let i = getNowYear; i >= getNowYear - 100; i--) {
+        if (i > 2018) {
+          yearsArr.push({ year: i, label: `${i}年 (令和${i - 2018})` });
+        } else if (i > 1988) {
+          yearsArr.push({ year: i, label: `${i}年 (平成${i - 1988})` });
+        } else if (i > 1925) {
+          yearsArr.push({ year: i, label: `${i}年 (昭和${i - 1925})` });
+        } else if (i > 1911) {
+          yearsArr.push({ year: i, label: `${i}年 (大正${i - 1911})` });
         }
       }
-      return nengoes;
+      return yearsArr;
+    },
+    createMonths() {
+      const monthsArr = [];
+      for (let i = 1; i <= 12; i++) {
+        monthsArr.push(i);
+      }
+      return monthsArr;
+    },
+    createDates() {
+      const datesArr = [];
+      for (let i = 1; i <= 31; i++) {
+        datesArr.push(i);
+      }
+      return datesArr;
     },
   },
 };
