@@ -1,10 +1,13 @@
 <template>
   <div id="app">
+    <Header />
     <div id="nav">
       <router-link to="/STEP1">STEP1</router-link> |
-      <router-link to="/STEP2">STEP2</router-link>
+      <router-link to="/STEP2">STEP2</router-link> |
+      <router-link to="/STEP3">STEP3</router-link>
     </div>
-    <router-view/>
+    <router-view />
+    <Footer />
   </div>
 </template>
 
@@ -30,3 +33,12 @@
   color: #42b983;
 }
 </style>
+
+<script>
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+export default {
+  name: "app",
+  components: { Header, Footer },
+};
+</script>
