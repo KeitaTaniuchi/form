@@ -22,6 +22,9 @@
       </p>
       <RadioBtn :name="step2Q3" :options="options"></RadioBtn>
     </div>
+
+    <Btn label="前に戻る" href="/" @click="() => $router.push('/')" />
+    <Btn label="次に進む" href="/STEP3" @click="() => $router.push('/STEP3')" />
   </div>
 </template>
 
@@ -30,9 +33,10 @@
 
 <script>
 import RadioBtn from "../components/RadioBtn.vue";
+import Btn from "../components/Btn.vue";
 export default {
   name: "step2",
-  components: { RadioBtn },
+  components: { RadioBtn, Btn },
   data() {
     return {
       step2Q1: "step2-q1",

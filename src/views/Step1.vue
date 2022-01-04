@@ -27,7 +27,7 @@
       >日
     </div>
 
-    <NextGoBtn />
+    <Btn label="次に進む" href="/STEP2" @click="() => $router.push('/STEP2')" />
   </div>
 </template>
 
@@ -36,10 +36,10 @@
 
 <script>
 import RadioBtn from "../components/RadioBtn.vue";
-import NextGoBtn from "../components/NextGoBtn.vue";
+import Btn from "../components/Btn.vue";
 export default {
   name: "step1",
-  components: { NextGoBtn, RadioBtn },
+  components: { Btn, RadioBtn },
   data() {
     return {
       step1Q1: "step1-q1",
@@ -96,6 +96,9 @@ export default {
         datesArr.push(i);
       }
       return datesArr;
+    },
+    test() {
+      this.$router.push("/STEP2");
     },
   },
 };

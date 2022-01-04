@@ -22,8 +22,8 @@ fieldset {
 <script>
 export default {
   props: {
-    options: { type: Array, require: true },
-    name: { type: String, require: true },
+    options: { type: Array, required: true },
+    name: { type: String, required: true },
   },
   methods: {
     updateValue: function (event) {

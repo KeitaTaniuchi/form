@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/STEP1",
+    path: "/",
     name: "STEP1",
     component: () => import("../views/Step1.vue"),
   },
