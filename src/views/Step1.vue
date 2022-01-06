@@ -1,38 +1,46 @@
 <template>
-  <div id="step1">
-    <h1>STEP1</h1>
-    <p>お客様の情報を入力してください</p>
+  <b-container class="mt-5 border border-info rounded">
+    <div id="step1">
+      <b-row class="bg-info bg-opacity-25">
+        <b-col cols="1" class="bg-primary text-light bg-opacity-75 rounded">
+          <p>STEP1</p>
+        </b-col>
+        <b-col><p>お客様の情報を入力してください</p></b-col>
+      </b-row>
 
-    <div id="question-container">
-      <h2>-性別-</h2>
-      <RadioBtn :name="step1Q1" :options="options"></RadioBtn>
+      <div id="question-container">
+        <h2>-性別-</h2>
+        <RadioBtn :name="step1Q1" :options="options"></RadioBtn>
+      </div>
+
+      <div id="question-container">
+        <h2>-生年月日-</h2>
+        <select id="year" v-model="year">
+          <option v-for="imperialEra in yearsArr" :key="imperialEra.year">
+            {{ imperialEra.label }}
+          </option></select
+        >年
+        <select id="month" v-model="month">
+          <option v-for="month in monthsArr" :key="month">
+            {{ month }}
+          </option></select
+        >月
+        <select id="date" v-model="date">
+          <option v-for="date in datesArr" :key="date">
+            {{ date }}
+          </option></select
+        >日
+      </div>
+
+      <Btn
+        label="次に進む"
+        href="/STEP2"
+        @click="() => $router.push('/STEP2')"
+      />
     </div>
-
-    <div id="question-container">
-      <h2>-生年月日-</h2>
-      <select id="year" v-model="year">
-        <option v-for="imperialEra in yearsArr" :key="imperialEra.year">
-          {{ imperialEra.label }}
-        </option></select
-      >年
-      <select id="month" v-model="month">
-        <option v-for="month in monthsArr" :key="month">
-          {{ month }}
-        </option></select
-      >月
-      <select id="date" v-model="date">
-        <option v-for="date in datesArr" :key="date">
-          {{ date }}
-        </option></select
-      >日
-    </div>
-
-    <Btn label="次に進む" href="/STEP2" @click="() => $router.push('/STEP2')" />
-  </div>
+  </b-container>
 </template>
 
-<style scoped>
-</style>
 
 <script>
 import RadioBtn from "../components/RadioBtn.vue";
