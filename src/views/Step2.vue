@@ -1,8 +1,10 @@
 <template>
   <b-container class="mt-5 border border-info rounded">
     <div id="step2">
-      <p>STEP2</p>
-      <p>以下にお答えください</p>
+      <p id="test" class="bg-info bg-opacity-25 border-bottom border-info">
+        以下にお答えください
+      </p>
+      <p id="step-number">STEP2</p>
 
       <div id="question-container">
         <p>現在、生命保険に加入されていますか？</p>
@@ -43,6 +45,15 @@
 </template>
 
 <style scoped>
+#test {
+  font-size: 20px;
+  margin: 0;
+
+}
+
+#step-number {
+  font-size: 20px;
+}
 </style>
 
 <script>

@@ -1,21 +1,19 @@
 <template>
-  <b-container class="mt-5 border border-info rounded">
-    <div id="step1">
-      <b-row class="bg-info bg-opacity-25">
-        <b-col cols="1" class="bg-primary text-light bg-opacity-75 rounded">
-          <p>STEP1</p>
-        </b-col>
-        <b-col><p>お客様の情報を入力してください</p></b-col>
-      </b-row>
+  <b-container>
+    <div class="mt-5 border border-info rounded">
+      <div id="step1">
+        <b-row class="bg-info bg-opacity-25 border-bottom border-info" style="margin-left: 0; margin-right: 0;">
+          <b-col cols="2" class="bg-primary text-light bg-opacity-75 rounded">
+            <p>STEP1</p>
+          </b-col>
+          <b-col cols><p>お客様の情報を入力してください</p></b-col>
+        </b-row>
 
-      <div id="question-container">
-        <h2>-性別-</h2>
-        <RadioBtn :name="step1Q1" :options="options"></RadioBtn>
-      </div>
+        <p class="mt-3">-性別-</p>
+        <RadioBtn :name="step1Q1" :options="options" class="m-3"></RadioBtn>
 
-      <div id="question-container">
-        <h2>-生年月日-</h2>
-        <select id="year" v-model="year">
+        <p class="mt-5">-生年月日-</p>
+        <select id="year" v-model="year" class="mb-3">
           <option v-for="imperialEra in yearsArr" :key="imperialEra.year">
             {{ imperialEra.label }}
           </option></select
@@ -31,11 +29,14 @@
           </option></select
         >日
       </div>
+    </div>
 
+    <div>
       <Btn
-        label="次に進む"
+        label="次に進む >"
         href="/STEP2"
         @click="() => $router.push('/STEP2')"
+        class="mt-3"
       />
     </div>
   </b-container>

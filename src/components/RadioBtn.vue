@@ -3,7 +3,7 @@
     <template v-for="(option, index) in options">
       <label :key="index">
         <input
-          class="m-2"
+          class="mx-2"
           type="radio"
           :value="option.value"
           :name="name"

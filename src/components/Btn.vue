@@ -1,6 +1,6 @@
 <template>
-  <a v-if="href" :href="href" class="btn" @click="clickLink">{{ label }}</a>
-  <button v-else type="button" class="btn" @click="$emit('click')">
+  <a v-if="href" :href="href" class="btn btn-primary" @click="clickLink">{{ label }}</a>
+  <button v-else type="button" class="btn btn-primary" @click="$emit('click')">
     {{ label }}
   </button>
 </template>
