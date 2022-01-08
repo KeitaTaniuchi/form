@@ -1,9 +1,9 @@
 <template>
   <fieldset>
     <template v-for="(option, index) in options">
-      <label :key="index">
+      <label :key="index" class="mx-2" >
         <input
-          class="mx-2"
+          class="mx-1"
           type="radio"
           :value="option.value"
           :name="name"

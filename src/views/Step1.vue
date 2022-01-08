@@ -1,56 +1,58 @@
 <template>
-  <b-container>
-    <div class="mt-5 border border-info rounded">
-      <div id="step1">
-        <b-row class="bg-info bg-opacity-25 border-bottom border-info" style="margin-left: 0; margin-right: 0;">
-          <b-col cols="2" class="bg-primary text-light bg-opacity-75 rounded">
-            <p>STEP1</p>
-          </b-col>
-          <b-col cols><p>お客様の情報を入力してください</p></b-col>
-        </b-row>
+  <QuestionBorder
+    :id_number="idNumber"
+    :question_detail="questionDetail"
+    :step_number="stepNumber"
+  >
+    <section>
+      <p class="mt-3">-性別-</p>
+      <RadioBtn :name="step1Q1" :options="options"></RadioBtn>
 
-        <p class="mt-3">-性別-</p>
-        <RadioBtn :name="step1Q1" :options="options" class="m-3"></RadioBtn>
+      <p class="mt-4">-生年月日-</p>
+      <select id="year" v-model="year" class="mb-3">
+        <option v-for="imperialEra in yearsArr" :key="imperialEra.year">
+          {{ imperialEra.label }}
+        </option></select
+      >年
+      <select id="month" v-model="month">
+        <option v-for="month in monthsArr" :key="month">
+          {{ month }}
+        </option></select
+      >月
+      <select id="date" v-model="date">
+        <option v-for="date in datesArr" :key="date">
+          {{ date }}
+        </option></select
+      >日
 
-        <p class="mt-5">-生年月日-</p>
-        <select id="year" v-model="year" class="mb-3">
-          <option v-for="imperialEra in yearsArr" :key="imperialEra.year">
-            {{ imperialEra.label }}
-          </option></select
-        >年
-        <select id="month" v-model="month">
-          <option v-for="month in monthsArr" :key="month">
-            {{ month }}
-          </option></select
-        >月
-        <select id="date" v-model="date">
-          <option v-for="date in datesArr" :key="date">
-            {{ date }}
-          </option></select
-        >日
-      </div>
-    </div>
-
-    <div>
-      <Btn
+    </section>
+    <Btn
         label="次に進む >"
         href="/STEP2"
         @click="() => $router.push('/STEP2')"
         class="mt-3"
       />
-    </div>
-  </b-container>
+  </QuestionBorder>
 </template>
 
+<style scoped>
+* {
+  text-align: center;
+}
+</style>
 
 <script>
 import RadioBtn from "../components/RadioBtn.vue";
+import QuestionBorder from "../components/QuestionBorder.vue";
 import Btn from "../components/Btn.vue";
 export default {
   name: "step1",
-  components: { Btn, RadioBtn },
+  components: { Btn, QuestionBorder, RadioBtn },
   data() {
     return {
+      idNumber: "step1",
+      questionDetail: "お客様の情報を入力してください",
+      stepNumber: "STEP1",
       step1Q1: "step1-q1",
       year: "",
       month: "",

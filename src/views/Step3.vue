@@ -1,9 +1,11 @@
 <template>
-  <b-container class="mt-5 border border-info rounded">
-    <div id="step3">
-      <p>STEP3</p>
-      <p>-ご相談内容 -</p>
-
+  <QuestionBorder
+    :id_number="idNumber"
+    :question_detail="questionDetail"
+    :step_number="stepNumber"
+  >
+    <section>
+      <p>インプットを作成する</p>
       <Btn
         label="前に戻る"
         href="/STEP2"
@@ -14,8 +16,8 @@
         href="/STEP3"
         @click="() => $router.push('/STEP3')"
       />
-    </div>
-  </b-container>
+    </section>
+  </QuestionBorder>
 </template>
 
 <style scoped>
@@ -23,8 +25,16 @@
 
 <script>
 import Btn from "../components/Btn.vue";
+import QuestionBorder from "../components/QuestionBorder.vue";
 export default {
   name: "step3",
-  components: { Btn },
+  components: { Btn, QuestionBorder },
+  data() {
+    return {
+      idNumber: "step3",
+      questionDetail: "-ご相談内容-",
+      stepNumber: "STEP3",
+    };
+  },
 };
 </script>
