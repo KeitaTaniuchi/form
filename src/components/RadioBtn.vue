@@ -1,33 +1,22 @@
 <template>
-  <fieldset>
-    <template v-for="(option, index) in options">
-      <label :key="index" class="mx-2" >
-        <input
-          class="mx-1"
-          type="radio"
-          :value="option.value"
-          :name="name"
-          @change="updateValue"
-        />{{ option.label }}
-      </label>
-    </template>
-  </fieldset>
+  <b-form-radio-group
+    class="mx-1"
+    :options="options"
+    value-field="value"
+    text-field="label"
+    :value="value"
+    @input="updateCheckFlg"
+  ></b-form-radio-group>
 </template>
-
-<style scoped>
-fieldset {
-  border: none;
-}
-</style>
 
 <script>
 export default {
   props: {
     options: { type: Array, required: true },
-    name: { type: String, required: true },
+    value: { type: Boolean },
   },
   methods: {
-    updateValue: function (event) {
+    updateCheckFlg: function (event) {
       this.$emit("input", event.target.value);
     },
   },

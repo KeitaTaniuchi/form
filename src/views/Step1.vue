@@ -1,59 +1,52 @@
 <template>
-  <QuestionBorder
-    :id_number="idNumber"
-    :question_detail="questionDetail"
-    :step_number="stepNumber"
-  >
-    <section>
-      <p class="mt-3">-性別-</p>
-      <RadioBtn :name="step1Q1" :options="options"></RadioBtn>
+  <div>
+    <QuestionContainer
+      id_number="step1"
+      question_detail="お客様の情報を入力してください"
+      step_number="STEP1"
+    >
+      <section>
+        <p class="text-primary">-性別-</p>
+        <RadioBtn radio_btn_name="step1-q1" :options="options"></RadioBtn>
 
-      <p class="mt-4">-生年月日-</p>
-      <select id="year" v-model="year" class="mb-3">
-        <option v-for="imperialEra in yearsArr" :key="imperialEra.year">
-          {{ imperialEra.label }}
-        </option></select
-      >年
-      <select id="month" v-model="month">
-        <option v-for="month in monthsArr" :key="month">
-          {{ month }}
-        </option></select
-      >月
-      <select id="date" v-model="date">
-        <option v-for="date in datesArr" :key="date">
-          {{ date }}
-        </option></select
-      >日
-
-    </section>
-    <Btn
-        label="次に進む >"
-        href="/STEP2"
-        @click="() => $router.push('/STEP2')"
-        class="mt-3"
-      />
-  </QuestionBorder>
+        <p class="mt-5 text-primary">-生年月日-</p>
+        <select v-model="year">
+          <option v-for="imperialEra in yearsArr" :key="imperialEra.year">
+            {{ imperialEra.label }}
+          </option></select
+        >年
+        <select v-model="month">
+          <option v-for="month in monthsArr" :key="month">
+            {{ month }}
+          </option></select
+        >月
+        <select v-model="date">
+          <option v-for="date in datesArr" :key="date">
+            {{ date }}
+          </option></select
+        >日
+      </section>
+    </QuestionContainer>
+    
+    <div class="text-center">
+      <GoNextBtn :step_number="nextStepNumber" />
+    </div>
+  </div>
 </template>
 
 <style scoped>
-* {
-  text-align: center;
-}
 </style>
 
 <script>
+import GoNextBtn from "../components/GoNextBtn.vue";
+import QuestionContainer from "../components/QuestionContainer.vue";
 import RadioBtn from "../components/RadioBtn.vue";
-import QuestionBorder from "../components/QuestionBorder.vue";
-import Btn from "../components/Btn.vue";
 export default {
   name: "step1",
-  components: { Btn, QuestionBorder, RadioBtn },
+  components: { GoNextBtn, QuestionContainer, RadioBtn },
   data() {
     return {
-      idNumber: "step1",
-      questionDetail: "お客様の情報を入力してください",
-      stepNumber: "STEP1",
-      step1Q1: "step1-q1",
+      nextStepNumber: "STEP2",
       year: "",
       month: "",
       date: "",
@@ -107,9 +100,6 @@ export default {
         datesArr.push(i);
       }
       return datesArr;
-    },
-    test() {
-      this.$router.push("/STEP2");
     },
   },
 };

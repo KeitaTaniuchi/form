@@ -1,65 +1,54 @@
 <template>
-  <QuestionBorder
-    :id_number="idNumber"
-    :question_detail="questionDetail"
-    :step_number="stepNumber"
-  >
-    <section>
-      <div>
-        <p class="mt-3">現在、生命保険に加入されていますか？</p>
-        <RadioBtn
-          v-model="q1CheckFlg"
-          :name="step2Q1"
-          :options="options"
-        ></RadioBtn>
-      </div>
+  <div>
+    <QuestionContainer
+      id_number="step2"
+      question_detail="以下にお答えください"
+      step_number="STEP2"
+    >
+      <section>
+        <div>
+          <p class="text-primary">現在、生命保険に加入されていますか？</p>
+          <RadioBtn v-model="q1CheckFlg" :options="options"></RadioBtn>
+        </div>
 
-      <div class="mt-4" v-show="q1CheckFlg">
-        <p>
-          現在、入院中ですか？
-          または,最近3ヶ月以内に医師の診察・検査の結果、入院・手術を勧められたことはありますか？
-        </p>
-        <RadioBtn
-          v-model="q2CheckFlg"
-          :name="step2Q2"
-          :options="options"
-        ></RadioBtn>
-      </div>
+        <div class="mt-5" v-show="q1CheckFlg">
+          <p class="text-primary">
+            現在、入院中ですか？
+            または,最近3ヶ月以内に医師の診察・検査の結果、入院・手術を勧められたことはありますか？
+          </p>
+          <RadioBtn v-model="q2CheckFlg" :options="options"></RadioBtn>
+        </div>
 
-      <div class="mt-4" v-show="q2CheckFlg">
-        <p>
-          過去5年以内に病気や怪我で手術を受けたこと、または継続して7日以上の入院をしたことがありますか？
-        </p>
-        <RadioBtn :name="step2Q3" :options="options"></RadioBtn>
-      </div>
+        <div class="mt-5" v-show="q2CheckFlg">
+          <p class="text-primary">
+            過去5年以内に病気や怪我で手術を受けたこと、または継続して7日以上の入院をしたことがありますか？
+          </p>
+          <RadioBtn :options="options"></RadioBtn>
+        </div>
+      </section>
+    </QuestionContainer>
 
-      <Btn label="前に戻る" href="/" @click="() => $router.push('/')" />
-      <Btn
-        label="次に進む"
-        href="/STEP3"
-        @click="() => $router.push('/STEP3')"
-      />
-    </section>
-  </QuestionBorder>
+    <div class="text-center">
+      <BackToPrevBtn :step_number="prevStepNumber" />
+      <GoNextBtn :step_number="nextStepNumber" />
+    </div>
+  </div>
 </template>
 
 <script>
+import BackToPrevBtn from "../components/BackToPrevBtn.vue";
+import GoNextBtn from "../components/GoNextBtn.vue";
+import QuestionContainer from "../components/QuestionContainer.vue";
 import RadioBtn from "../components/RadioBtn.vue";
-import QuestionBorder from "../components/QuestionBorder.vue";
-import Btn from "../components/Btn.vue";
 export default {
   name: "step2",
-  components: { RadioBtn, QuestionBorder, Btn },
+  components: { BackToPrevBtn, GoNextBtn, QuestionContainer, RadioBtn },
   data() {
     return {
-      idNumber: "step2",
-      questionDetail: "以下にお答えください",
-      stepNumber: "STEP2",
-      step2Q1: "step2-q1",
-      step2Q2: "step2-q2",
-      step2Q3: "step2-q3",
       q1CheckFlg: false,
       q2CheckFlg: false,
+      prevStepNumber: "",
+      nextStepNumber: "STEP3",
       options: [
         {
           label: "はい",

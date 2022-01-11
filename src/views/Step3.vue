@@ -1,39 +1,37 @@
 <template>
-  <QuestionBorder
-    :id_number="idNumber"
-    :question_detail="questionDetail"
-    :step_number="stepNumber"
-  >
-    <section>
-      <p>インプットを作成する</p>
-      <Btn
-        label="前に戻る"
-        href="/STEP2"
-        @click="() => $router.push('/STEP2')"
-      />
-      <Btn
-        label="次に進む"
-        href="/STEP3"
-        @click="() => $router.push('/STEP3')"
-      />
-    </section>
-  </QuestionBorder>
+  <div>
+    <QuestionContainer
+      id_number="step3"
+      question_detail="ご相談内容をご記入ください"
+      step_number="STEP3"
+    >
+      <section>
+        <p class="text-primary">-ご相談内容-</p>
+        
+      </section>
+    </QuestionContainer>
+
+    <div class="text-center">
+      <BackToPrevBtn :step_number="prevStepNumber" />
+      <GoNextBtn :step_number="nextStepNumber" />
+    </div>
+  </div>
 </template>
 
 <style scoped>
 </style>
 
 <script>
-import Btn from "../components/Btn.vue";
-import QuestionBorder from "../components/QuestionBorder.vue";
+import BackToPrevBtn from "../components/BackToPrevBtn.vue";
+import GoNextBtn from "../components/GoNextBtn.vue";
+import QuestionContainer from "../components/QuestionContainer.vue";
 export default {
   name: "step3",
-  components: { Btn, QuestionBorder },
+  components: { BackToPrevBtn, GoNextBtn, QuestionContainer },
   data() {
     return {
-      idNumber: "step3",
-      questionDetail: "-ご相談内容-",
-      stepNumber: "STEP3",
+      prevStepNumber: "STEP2",
+      nextStepNumber: "",
     };
   },
 };
