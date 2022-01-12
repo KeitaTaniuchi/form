@@ -2,10 +2,7 @@
   <b-form-radio-group
     class="mx-1"
     :options="options"
-    value-field="value"
-    text-field="label"
-    :value="value"
-    @input="updateCheckFlg"
+    @change="updateCheckFlg"
   ></b-form-radio-group>
 </template>
 
@@ -13,11 +10,10 @@
 export default {
   props: {
     options: { type: Array, required: true },
-    value: { type: Boolean },
   },
   methods: {
     updateCheckFlg: function (event) {
-      this.$emit("input", event.target.value);
+      this.$emit("change", event.target.checked);
     },
   },
 };

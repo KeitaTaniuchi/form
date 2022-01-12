@@ -51,11 +51,11 @@ export default {
       nextStepNumber: "STEP3",
       options: [
         {
-          label: "はい",
+          text: "はい",
           value: "1",
         },
         {
-          label: "いいえ",
+          text: "いいえ",
           value: "2",
         },
       ],
