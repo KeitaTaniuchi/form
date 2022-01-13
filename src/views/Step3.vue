@@ -1,19 +1,22 @@
 <template>
   <div>
     <QuestionContainer
-      id_number="step3"
-      question_detail="ご相談内容をご記入ください"
-      step_number="STEP3"
+      idNumber="step3"
+      questionDetail="ご相談内容をご記入ください"
+      stepNumber="STEP3"
     >
       <section>
-        <p class="text-primary">-ご相談内容-</p>
-        
+        <b-form-group label="-ご相談内容-">
+          <b-form-textarea
+            rows="10"
+          ></b-form-textarea>
+        </b-form-group>
       </section>
     </QuestionContainer>
 
     <div class="text-center">
-      <BackToPrevBtn :step_number="prevStepNumber" />
-      <GoNextBtn :step_number="nextStepNumber" />
+      <BackToPrevBtn :stepNumber="prevStepNumber" />
+      <GoNextBtn :stepNumber="nextStepNumber" />
     </div>
   </div>
 </template>

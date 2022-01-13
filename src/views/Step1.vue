@@ -1,23 +1,25 @@
 <template>
   <div>
     <QuestionContainer
-      id_number="step1"
-      question_detail="お客様の情報を入力してください"
-      step_number="STEP1"
+      idNumber="step1"
+      questionDetail="お客様の情報を入力してください"
+      stepNumber="STEP1"
     >
       <section>
-        <p class="text-primary">-性別-</p>
-        <RadioBtn :options="options"></RadioBtn>
+        <b-form-group label="-性別-">
+          <RadioBtn :options="options" />
+        </b-form-group>
 
-        <p class="mt-5 text-primary">-生年月日-</p>
-        <b-form-select v-model="year" :options="yearsArr"></b-form-select>年
-        <b-form-select v-model="month" :options="monthsArr"></b-form-select>月
-        <b-form-select v-model="date" :options="datesArr"></b-form-select>日
+        <b-form-group class="mt-5" label="-生年月日-">
+          <b-form-select v-model="year" :options="yearsArr"></b-form-select>年
+          <b-form-select v-model="month" :options="monthsArr"></b-form-select>月
+          <b-form-select v-model="date" :options="datesArr"></b-form-select>日
+        </b-form-group>
       </section>
     </QuestionContainer>
 
     <div class="text-center">
-      <GoNextBtn :step_number="nextStepNumber" />
+      <GoNextBtn class="text-center" :stepNumber="nextStepNumber" />
     </div>
   </div>
 </template>

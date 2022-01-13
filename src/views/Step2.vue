@@ -1,36 +1,37 @@
 <template>
   <div>
     <QuestionContainer
-      id_number="step2"
-      question_detail="以下にお答えください"
-      step_number="STEP2"
+      idNumber="step2"
+      questionDetail="以下にお答えください"
+      stepNumber="STEP2"
     >
       <section>
-        <div>
-          <p class="text-primary">現在、生命保険に加入されていますか？</p>
-          <RadioBtn v-model="q1CheckFlg" :options="options"></RadioBtn>
-        </div>
+        <b-form-group label="現在、生命保険に加入されていますか？">
+          <RadioBtn v-model="q1CheckFlg" :options="options" />
+        </b-form-group>
 
-        <div class="mt-5" v-show="q1CheckFlg">
-          <p class="text-primary">
-            現在、入院中ですか？
-            または,最近3ヶ月以内に医師の診察・検査の結果、入院・手術を勧められたことはありますか？
-          </p>
-          <RadioBtn v-model="q2CheckFlg" :options="options"></RadioBtn>
-        </div>
+        <b-form-group
+          class="mt-5"
+          v-show="q1CheckFlg"
+          label="現在、入院中ですか？
+            または,最近3ヶ月以内に医師の診察・検査の結果、入院・手術を勧められたことはありますか？"
+        >
+          <RadioBtn v-model="q2CheckFlg" :options="options" />
+        </b-form-group>
 
-        <div class="mt-5" v-show="q2CheckFlg">
-          <p class="text-primary">
-            過去5年以内に病気や怪我で手術を受けたこと、または継続して7日以上の入院をしたことがありますか？
-          </p>
-          <RadioBtn :options="options"></RadioBtn>
-        </div>
+        <b-form-group
+          class="mt-5"
+          v-show="q2CheckFlg"
+          label="過去5年以内に病気や怪我で手術を受けたこと、または継続して7日以上の入院をしたことがありますか？"
+        >
+          <RadioBtn :options="options" />
+        </b-form-group>
       </section>
     </QuestionContainer>
 
     <div class="text-center">
-      <BackToPrevBtn :step_number="prevStepNumber" />
-      <GoNextBtn :step_number="nextStepNumber" />
+      <BackToPrevBtn :stepNumber="prevStepNumber" />
+      <GoNextBtn :stepNumber="nextStepNumber" />
     </div>
   </div>
 </template>

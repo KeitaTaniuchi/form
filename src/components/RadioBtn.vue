@@ -1,9 +1,10 @@
 <template>
-  <b-form-radio-group
-    class="mx-1"
-    :options="options"
-    @change="updateCheckFlg"
-  ></b-form-radio-group>
+  <b-form-group>
+    <b-form-radio-group
+      :options="options"
+      @input="updateCheckFlg"
+    ></b-form-radio-group>
+  </b-form-group>
 </template>
 
 <script>
@@ -12,8 +13,8 @@ export default {
     options: { type: Array, required: true },
   },
   methods: {
-    updateCheckFlg: function (event) {
-      this.$emit("change", event.target.checked);
+    updateCheckFlg: function (e) {
+      this.$emit("input", e);
     },
   },
 };

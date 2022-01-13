@@ -2,7 +2,7 @@
   <button
     type="button"
     class="mt-3 mx-3 btn btn-primary"
-    @click="() => $router.push(`/${step_number}`)"
+    @click="() => $router.push(`/${stepNumber}`)"
   >
     前に戻る >
   </button>
@@ -11,7 +11,7 @@
 <script>
 export default {
   props: {
-    step_number: {
+    stepNumber: {
       type: String,
       required: true,
     },

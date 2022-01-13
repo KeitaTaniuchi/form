@@ -4,7 +4,7 @@
     class="pb-4 mt-5 border border-info rounded"
     style="width: 70%"
   >
-    <div :id="id_number">
+    <div :id="idNumber">
       <p
         class="
           py-3
@@ -16,7 +16,7 @@
           position-relative
         "
       >
-        {{ question_detail }}
+        {{ questionDetail }}
         <span
           class="
             px-2
@@ -27,7 +27,7 @@
             top-0
             start-0
           "
-          >{{ step_number }}</span
+          >{{ stepNumber }}</span
         >
       </p>
       <slot></slot>
@@ -44,9 +44,9 @@ p[class*="position-relative"] {
 <script>
 export default {
   props: {
-    id_number: { type: String, required: true },
-    question_detail: { type: String, required: true },
-    step_number: { type: String, required: true },
+    idNumber: { type: String, required: true },
+    questionDetail: { type: String, required: true },
+    stepNumber: { type: String, required: true },
   },
 };
 </script>
