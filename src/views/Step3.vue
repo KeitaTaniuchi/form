@@ -8,7 +8,7 @@
       <section>
         <b-form-group label="-ご相談内容-">
           <b-form-textarea
-            rows="10"
+            rows="15"
           ></b-form-textarea>
         </b-form-group>
       </section>
@@ -20,9 +20,6 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-</style>
 
 <script>
 import BackToPrevBtn from "../components/BackToPrevBtn.vue";

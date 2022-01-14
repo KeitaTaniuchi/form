@@ -1,34 +1,25 @@
 <template>
   <b-container
     fluid
-    class="pb-4 mt-5 border border-info rounded"
+    class="pb-3 mt-5 border border-primary rounded"
     style="width: 70%"
   >
-    <div :id="idNumber">
-      <p
+    <div :id="idNumber" class="position-relative">
+      <span
         class="
-          py-3
-          mb-4
-          text-center
-          bg-info bg-opacity-25
-          border-bottom border-info
+          px-2
+          text-center text-light
+          bg-primary
           rounded
-          position-relative
+          position-absolute
+          top-0
+          start-0
         "
       >
+        {{ stepNumber }}
+      </span>
+      <p class="py-3 mb-4 text-center border-bottom border-primary rounded">
         {{ questionDetail }}
-        <span
-          class="
-            px-2
-            text-center text-light
-            bg-primary bg-opacity-75
-            rounded
-            position-absolute
-            top-0
-            start-0
-          "
-          >{{ stepNumber }}</span
-        >
       </p>
       <slot></slot>
     </div>
@@ -36,8 +27,13 @@
 </template>
 
 <style scoped>
-p[class*="position-relative"] {
+p, span {
   margin: 0 -15px;
+}
+
+p {
+  background-color: rgba(0, 123, 255, 0.3);
+  font-size: 20px;
 }
 </style>
 

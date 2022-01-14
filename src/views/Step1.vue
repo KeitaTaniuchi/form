@@ -11,9 +11,17 @@
         </b-form-group>
 
         <b-form-group class="mt-5" label="-生年月日-">
-          <b-form-select v-model="year" :options="yearsArr"></b-form-select>年
-          <b-form-select v-model="month" :options="monthsArr"></b-form-select>月
-          <b-form-select v-model="date" :options="datesArr"></b-form-select>日
+          <b-form-select
+            v-model="year"
+            :options="yearsArr"
+            class="mb-3"
+          ></b-form-select>
+          <b-form-select
+            v-model="month"
+            :options="monthsArr"
+            class="mb-3"
+          ></b-form-select>
+          <b-form-select v-model="date" :options="datesArr"></b-form-select>
         </b-form-group>
       </section>
     </QuestionContainer>
@@ -34,9 +42,9 @@ export default {
   data() {
     return {
       nextStepNumber: "STEP2",
-      year: "",
-      month: "",
-      date: "",
+      year: null,
+      month: null,
+      date: null,
       yearsArr: [],
       monthsArr: [],
       datesArr: [],
@@ -60,31 +68,46 @@ export default {
   methods: {
     createYears() {
       const yearsArr = [];
+      yearsArr.push({
+        value: null,
+        text: "年を選択してください",
+        disabled: true,
+      });
       let getNowYear = new Date().getFullYear();
       for (let i = getNowYear; i >= getNowYear - 100; i--) {
         if (i > 2018) {
-          yearsArr.push({ value: i, text: `${i}年 (令和${i - 2018})` });
+          yearsArr.push({ value: i, text: `${i}年 (令和${i - 2018}年)` });
         } else if (i > 1988) {
-          yearsArr.push({ value: i, text: `${i}年 (平成${i - 1988})` });
+          yearsArr.push({ value: i, text: `${i}年 (平成${i - 1988}年)` });
         } else if (i > 1925) {
-          yearsArr.push({ value: i, text: `${i}年 (昭和${i - 1925})` });
+          yearsArr.push({ value: i, text: `${i}年 (昭和${i - 1925}年)` });
         } else if (i > 1911) {
-          yearsArr.push({ value: i, text: `${i}年 (大正${i - 1911})` });
+          yearsArr.push({ value: i, text: `${i}年 (大正${i - 1911}年)` });
         }
       }
       return yearsArr;
     },
     createMonths() {
       const monthsArr = [];
+      monthsArr.push({
+        value: null,
+        text: "月を選択してください",
+        disabled: true,
+      });
       for (let i = 1; i <= 12; i++) {
-        monthsArr.push({ value: i, text: i });
+        monthsArr.push({ value: i, text: `${i}月` });
       }
       return monthsArr;
     },
     createDates() {
       const datesArr = [];
+      datesArr.push({
+        value: null,
+        text: "日を選択してください",
+        disabled: true,
+      });
       for (let i = 1; i <= 31; i++) {
-        datesArr.push({ value: i, text: i });
+        datesArr.push({ value: i, text: `${i}日` });
       }
       return datesArr;
     },
