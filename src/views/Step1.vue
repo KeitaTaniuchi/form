@@ -21,13 +21,16 @@
             :options="monthsArr"
             class="mb-3"
           ></b-form-select>
-          <b-form-select v-model="date" :options="datesArr"></b-form-select>
+          <b-form-select
+            v-model="date"
+            :options="datesArr"
+          ></b-form-select>
         </b-form-group>
       </section>
     </QuestionContainer>
 
     <div class="text-center">
-      <GoNextBtn class="text-center" :stepNumber="nextStepNumber" />
+      <GoNextBtn :stepNumber="nextStepNumber" />
     </div>
   </div>
 </template>
@@ -36,6 +39,10 @@
 import GoNextBtn from "../components/GoNextBtn.vue";
 import QuestionContainer from "../components/QuestionContainer.vue";
 import RadioBtn from "../components/RadioBtn.vue";
+import dayjs from "dayjs";
+dayjs.locale("ja");
+const isLeapYear = require("dayjs/plugin/isLeapYear");
+dayjs.extend(isLeapYear);
 export default {
   name: "step1",
   components: { GoNextBtn, QuestionContainer, RadioBtn },
@@ -70,11 +77,10 @@ export default {
       const yearsArr = [];
       yearsArr.push({
         value: null,
-        text: "年を選択してください",
+        text: "-年を選択してください-",
         disabled: true,
       });
-      let getNowYear = new Date().getFullYear();
-      for (let i = getNowYear; i >= getNowYear - 100; i--) {
+      for (let i = dayjs().year(); i >= dayjs().year() - 100; i--) {
         if (i > 2018) {
           yearsArr.push({ value: i, text: `${i}年 (令和${i - 2018}年)` });
         } else if (i > 1988) {
@@ -91,7 +97,7 @@ export default {
       const monthsArr = [];
       monthsArr.push({
         value: null,
-        text: "月を選択してください",
+        text: "-月を選択してください-",
         disabled: true,
       });
       for (let i = 1; i <= 12; i++) {
@@ -101,15 +107,43 @@ export default {
     },
     createDates() {
       const datesArr = [];
+      const shortMonth = [2, 4, 6, 9, 11];
       datesArr.push({
         value: null,
-        text: "日を選択してください",
+        text: "-日を選択してください-",
         disabled: true,
       });
-      for (let i = 1; i <= 31; i++) {
-        datesArr.push({ value: i, text: `${i}日` });
-      }
+
+      /* 閏年かつ2月を選択した場合 */
+      if (dayjs(String(this.year)).isLeapYear() && this.month === 2)
+        for (let i = 1; i <= 29; i++) {
+          datesArr.push({ value: i, text: `${i}日` });
+        }
+
+      /* 小の月を選択した場合 */
+      else if (shortMonth.includes(this.month))
+        for (let i = 1; i <= 30; i++) {
+          datesArr.push({ value: i, text: `${i}日` });
+        }
+
+      /* 大の月を選択した場合 */
+      else
+        for (let i = 1; i <= 31; i++) {
+          datesArr.push({ value: i, text: `${i}日` });
+        }
       return datesArr;
+    },
+  },
+
+  /* 年と月変更時に、datesArrを再作成する処理 */
+  watch: {
+    year: function () {
+      this.datesArr = this.createDates();
+      if (this.date >= this.datesArr.length) this.date = null;
+    },
+    month: function () {
+      this.datesArr = this.createDates();
+      if (this.date >= this.datesArr.length) this.date = null;
     },
   },
 };
