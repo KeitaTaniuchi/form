@@ -6,26 +6,25 @@
       stepNumber="STEP2"
     >
       <section>
-        <b-form-group label="現在、生命保険に加入されていますか？">
-          <RadioBtn v-model="q1CheckFlg" :options="options" />
-        </b-form-group>
-
-        <b-form-group
+        <RadioBtn
+          v-model="q1CheckFlg"
+          label="現在、生命保険に加入されていますか？"
+          :options="options"
+        />
+        <RadioBtn
           class="mt-5"
           v-show="q1CheckFlg"
+          v-model="q2CheckFlg"
           label="現在、入院中ですか？
             または,最近3ヶ月以内に医師の診察・検査の結果、入院・手術を勧められたことはありますか？"
-        >
-          <RadioBtn v-model="q2CheckFlg" :options="options" />
-        </b-form-group>
-
-        <b-form-group
+          :options="options"
+        />
+        <RadioBtn
           class="mt-5"
           v-show="q2CheckFlg"
           label="過去5年以内に病気や怪我で手術を受けたこと、または継続して7日以上の入院をしたことがありますか？"
-        >
-          <RadioBtn :options="options" />
-        </b-form-group>
+          :options="options"
+        />
       </section>
     </QuestionContainer>
 
