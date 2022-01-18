@@ -67,7 +67,7 @@ export default {
     this.monthsArr = definition.createMonths();
     this.datesArr = definition.createDates(this.year, this.month);
   },
-
+  
   /* 年と月変更時に、datesArrを再作成
   現在選択中の日が変更後の月に存在しない場合、dateにnullを代入*/
   watch: {

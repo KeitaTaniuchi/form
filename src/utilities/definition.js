@@ -4,12 +4,13 @@ const isLeapYear = require("dayjs/plugin/isLeapYear");
 dayjs.extend(isLeapYear);
 
 const createYears = () => {
-  const yearsArr = [];
-  yearsArr.push({
-    value: null,
-    text: "-年を選択してください-",
-    disabled: true,
-  });
+  const yearsArr = [
+    {
+      value: null,
+      text: "-年を選択してください-",
+      disabled: true,
+    },
+  ];
   for (let i = dayjs().year(); i >= dayjs().year() - 100; i--) {
     if (i > 2018) {
       yearsArr.push({ value: i, text: `${i}年 (令和${i - 2018}年)` });
@@ -25,12 +26,13 @@ const createYears = () => {
 };
 
 const createMonths = () => {
-  const monthsArr = [];
-  monthsArr.push({
-    value: null,
-    text: "-月を選択してください-",
-    disabled: true,
-  });
+  const monthsArr = [
+    {
+      value: null,
+      text: "-月を選択してください-",
+      disabled: true,
+    },
+  ];
   for (let i = 1; i <= 12; i++) {
     monthsArr.push({ value: i, text: `${i}月` });
   }
@@ -38,29 +40,27 @@ const createMonths = () => {
 };
 
 const createDates = (thisYear, thisMonth) => {
-  const datesArr = [];
-  const shortMonths = [2, 4, 6, 9, 11];
-  datesArr.push({
-    value: null,
-    text: "-日を選択してください-",
-    disabled: true,
-  });
+  const datesArr = [
+    {
+      value: null,
+      text: "-日を選択してください-",
+      disabled: true,
+    },
+  ];
 
-  /* 閏年かつ2月を選択 */
-  if (dayjs(String(thisYear)).isLeapYear() && thisMonth === 2)
-    for (let i = 1; i <= 29; i++) {
-      datesArr.push({ value: i, text: `${i}日` });
-    }
-
-  /* 小の月を選択 */ 
-  else if (shortMonths.includes(thisMonth))
-    for (let i = 1; i <= 30; i++) {
-      datesArr.push({ value: i, text: `${i}日` });
-    }
-    
-  /* 大の月を選択または初期値 */ 
-  else
+  /* 初期値 */
+  if (thisYear === null || thisMonth === null)
     for (let i = 1; i <= 31; i++) {
+      datesArr.push({ value: i, text: `${i}日` });
+    }
+
+  /* 年と月選択後 */ 
+  else
+    for (
+      let i = 1;
+      i <= dayjs(`'${thisYear}-${thisMonth}-01'`).daysInMonth();
+      i++
+    ) {
       datesArr.push({ value: i, text: `${i}日` });
     }
   return datesArr;
