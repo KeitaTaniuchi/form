@@ -1,33 +1,84 @@
 <template>
-  <div class="STEP1">
-    <h1>STEP1</h1>
-    <p>お客様の情報を入力してください</p>
+  <div>
+    <QuestionContainer
+      idNumber="step1"
+      questionDetail="お客様の情報を入力してください"
+      stepNumber="STEP1"
+    >
+      <section>
+        <RadioBtn label="-性別-" :options="options" />
 
-    <h2>-性別-</h2>
-    <div class="radio-button">
-      <input type="radio" name="sex" id="male" value="1" />
-      <label for="male">男性</label>
-    </div>
-    <div class="radio-button">
-      <input type="radio" name="sex" id="female" value="2" />
-      <label for="female">女性</label>
-    </div>
+        <b-form-group class="mt-5" label="-生年月日-">
+          <b-form-select
+            v-model="year"
+            :options="yearsArr"
+            class="mb-3"
+          ></b-form-select>
+          <b-form-select
+            v-model="month"
+            :options="monthsArr"
+            class="mb-3"
+          ></b-form-select>
+          <b-form-select
+            v-model="date" 
+            :options="datesArr"
+          ></b-form-select>
+        </b-form-group>
+      </section>
+    </QuestionContainer>
 
-    <h2>-生年月日-</h2>
-    <div>
-      <select id="select_year" name="year"></select>年
-      <select id="select_month" name="month"></select>月
-      <select id="select_day" name="day"></select>日
+    <div class="text-center">
+      <GoNextBtn :stepNumber="nextStepNumber" />
     </div>
   </div>
 </template>
 
-<style scoped>
-</style>
-
 <script>
+import GoNextBtn from "../components/GoNextBtn.vue";
+import QuestionContainer from "../components/QuestionContainer.vue";
+import RadioBtn from "../components/RadioBtn.vue";
+import definition from "../utilities/definition";
 export default {
-  name: "STEP1",
-  data: () => {},
+  name: "step1",
+  components: { GoNextBtn, QuestionContainer, RadioBtn },
+  data() {
+    return {
+      nextStepNumber: "STEP2",
+      year: null,
+      month: null,
+      date: null,
+      yearsArr: [],
+      monthsArr: [],
+      datesArr: [],
+      options: [
+        {
+          text: "男性",
+          value: "1",
+        },
+        {
+          text: "女性",
+          value: "2",
+        },
+      ],
+    };
+  },
+  mounted() {
+    this.yearsArr = definition.createYears();
+    this.monthsArr = definition.createMonths();
+    this.datesArr = definition.createDates(this.year, this.month);
+  },
+  
+  /* 年と月変更時に、datesArrを再作成
+  現在選択中の日が変更後の月に存在しない場合、dateにnullを代入*/
+  watch: {
+    year: function () {
+      this.datesArr = definition.createDates(this.year, this.month);
+      if (this.date >= this.datesArr.length) this.date = null;
+    },
+    month: function () {
+      this.datesArr = definition.createDates(this.year, this.month);
+      if (this.date >= this.datesArr.length) this.date = null;
+    },
+  },
 };
 </script>
