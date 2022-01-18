@@ -1,16 +1,12 @@
 <template>
   <div>
     <QuestionContainer
-      idNumber="step3"
-      questionDetail="ご相談内容をご記入ください"
-      stepNumber="STEP3"
+      idNumber="step4"
+      questionDetail="以下の内容をご確認ください"
+      stepNumber="STEP4"
     >
       <section>
-        <b-form-group label="-ご相談内容-">
-          <b-form-textarea
-            rows="15"
-          ></b-form-textarea>
-        </b-form-group>
+          <p>テスト</p>
       </section>
     </QuestionContainer>
 
@@ -26,12 +22,12 @@ import BackToPrevBtn from "../components/BackToPrevBtn.vue";
 import GoNextBtn from "../components/GoNextBtn.vue";
 import QuestionContainer from "../components/QuestionContainer.vue";
 export default {
-  name: "step3",
+  name: "step4",
   components: { BackToPrevBtn, GoNextBtn, QuestionContainer },
   data() {
     return {
-      prevStepNumber: "STEP2",
-      nextStepNumber: "STEP4",
+      prevStepNumber: "STEP3",
+      nextStepNumber: "",
     };
   },
 };
