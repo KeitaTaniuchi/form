@@ -7,21 +7,23 @@
     >
       <section>
         <RadioBtn
-          v-model="q1CheckFlg"
+          v-model="step2Q1"
           label="現在、生命保険に加入されていますか？"
           :options="options"
         />
+      <p v-show="step2Q1"> テスト</p>
         <RadioBtn
           class="mt-5"
-          v-show="q1CheckFlg"
-          v-model="q2CheckFlg"
-          label="現在、入院中ですか？
+          v-show="step2Q1"
+          v-model="step2Q2"
+          label="現在、入院中ですか？ï
             または,最近3ヶ月以内に医師の診察・検査の結果、入院・手術を勧められたことはありますか？"
           :options="options"
         />
         <RadioBtn
           class="mt-5"
-          v-show="q2CheckFlg"
+          v-show="step2Q2"
+          v-model="step2Q3"
           label="過去5年以内に病気や怪我で手術を受けたこと、または継続して7日以上の入院をしたことがありますか？"
           :options="options"
         />
@@ -45,8 +47,9 @@ export default {
   components: { BackToPrevBtn, GoNextBtn, QuestionContainer, RadioBtn },
   data() {
     return {
-      q1CheckFlg: false,
-      q2CheckFlg: false,
+      /* step2Q1: false, */
+      step2Q2: false,
+      step2Q3: false,
       prevStepNumber: "",
       nextStepNumber: "STEP3",
       options: [
@@ -60,6 +63,17 @@ export default {
         },
       ],
     };
+  },
+  mounted() {},
+  computed: {
+    step2Q1: {
+      get() {
+        return this.$store.state.step2Q1;
+      },
+      set(value) {
+        this.$store.commit("updateStep2Q1", value);
+      },
+    },
   },
 };
 </script>
