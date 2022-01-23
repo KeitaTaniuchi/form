@@ -6,27 +6,29 @@
       stepNumber="STEP2"
     >
       <section>
-        <RadioBtn
-          v-model="step2Q1"
-          label="現在、生命保険に加入されていますか？"
-          :options="options"
-        />
-      <p v-show="step2Q1"> テスト</p>
-        <RadioBtn
-          class="mt-5"
-          v-show="step2Q1"
-          v-model="step2Q2"
-          label="現在、入院中ですか？ï
-            または,最近3ヶ月以内に医師の診察・検査の結果、入院・手術を勧められたことはありますか？"
-          :options="options"
-        />
-        <RadioBtn
-          class="mt-5"
-          v-show="step2Q2"
-          v-model="step2Q3"
-          label="過去5年以内に病気や怪我で手術を受けたこと、または継続して7日以上の入院をしたことがありますか？"
-          :options="options"
-        />
+        <b-form-group :label="q1Label">
+          <b-form-radio-group
+            v-model="q1"
+            :options="options"
+            @input="updateData"
+          ></b-form-radio-group>
+        </b-form-group>
+
+        <b-form-group class="mt-5" v-show="q1" :label="q2Label">
+          <b-form-radio-group
+            v-model="q2"
+            :options="options"
+            @input="updateData"
+          ></b-form-radio-group>
+        </b-form-group>
+
+        <b-form-group class="mt-5" v-show="q2" :label="q3Label">
+          <b-form-radio-group
+            v-model="q3"
+            :options="options"
+            @input="updateData"
+          ></b-form-radio-group>
+        </b-form-group>
       </section>
     </QuestionContainer>
 
@@ -41,39 +43,43 @@
 import BackToPrevBtn from "../components/BackToPrevBtn.vue";
 import GoNextBtn from "../components/GoNextBtn.vue";
 import QuestionContainer from "../components/QuestionContainer.vue";
-import RadioBtn from "../components/RadioBtn.vue";
 export default {
   name: "step2",
-  components: { BackToPrevBtn, GoNextBtn, QuestionContainer, RadioBtn },
+  components: { BackToPrevBtn, GoNextBtn, QuestionContainer },
   data() {
     return {
-      /* step2Q1: false, */
-      step2Q2: false,
-      step2Q3: false,
+      q1: "",
+      q2: "",
+      q3: "",
+      options: "",
       prevStepNumber: "",
       nextStepNumber: "STEP3",
-      options: [
-        {
-          text: "はい",
-          value: "1",
-        },
-        {
-          text: "いいえ",
-          value: "2",
-        },
-      ],
     };
   },
-  mounted() {},
-  computed: {
-    step2Q1: {
-      get() {
-        return this.$store.state.step2Q1;
-      },
-      set(value) {
-        this.$store.commit("updateStep2Q1", value);
-      },
+  mounted() {
+    /* ラジオボタンのラベルをストアから取得 */
+    this.q1Label = this.$store.getters.step2Q1Label;
+    this.q2Label = this.$store.getters.step2Q2Label;
+    this.q3Label = this.$store.getters.step2Q3Label;
+
+    /* ラジオボタンのオプション(選択肢)をストアから取得 */
+    this.options = this.$store.getters.step2Options;
+  },
+  methods: {
+    updateData: function (event) {
+      this.$emit("input", event);
     },
   },
+
+  /*  computed: {
+    q1: {
+      set(event) {
+        this.$store.commit("updateStep2Q1Value", event);
+      },
+      get() {
+        return this.$store.getters.getStep2Q1Value;
+      },
+    },
+  }, */
 };
 </script>

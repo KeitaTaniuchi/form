@@ -2,7 +2,7 @@
   <b-form-group :label="label">
     <b-form-radio-group
       :options="options"
-      @input="updateCheckFlg"
+      @input="updateData"
     ></b-form-radio-group>
   </b-form-group>
 </template>
@@ -14,7 +14,7 @@ export default {
     options: { type: Array, required: true },
   },
   methods: {
-    updateCheckFlg: function (event) {
+    updateData: function (event) {
       this.$emit("input", event);
     },
   },

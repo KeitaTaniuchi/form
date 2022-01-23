@@ -53,11 +53,11 @@ export default {
       options: [
         {
           text: "男性",
-          value: "1",
+          value: "男性",
         },
         {
           text: "女性",
-          value: "2",
+          value: "女性",
         },
       ],
     };
