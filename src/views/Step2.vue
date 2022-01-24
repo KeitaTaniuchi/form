@@ -8,25 +8,24 @@
       <section>
         <b-form-group :label="q1Label">
           <b-form-radio-group
-            v-model="q1"
+            v-model="q2Show"
             :options="options"
-            @input="updateData"
+            @input="updateStep2Q1Value"
           ></b-form-radio-group>
         </b-form-group>
 
-        <b-form-group class="mt-5" v-show="q1" :label="q2Label">
+        <b-form-group class="mt-5" v-show="q2Show" :label="q2Label">
           <b-form-radio-group
-            v-model="q2"
+            v-model="q3Show"
             :options="options"
-            @input="updateData"
+            @input="updateStep2Q2Value"
           ></b-form-radio-group>
         </b-form-group>
 
-        <b-form-group class="mt-5" v-show="q2" :label="q3Label">
+        <b-form-group class="mt-5" v-show="q3Show" :label="q3Label">
           <b-form-radio-group
-            v-model="q3"
             :options="options"
-            @input="updateData"
+            @input="updateStep2Q3Value"
           ></b-form-radio-group>
         </b-form-group>
       </section>
@@ -48,38 +47,43 @@ export default {
   components: { BackToPrevBtn, GoNextBtn, QuestionContainer },
   data() {
     return {
-      q1: "",
-      q2: "",
-      q3: "",
-      options: "",
+      /* Q2とQ3をv-showで表示 */
+      q2Show: false,
+      q3Show: false,
+
+      /* 質問のラベル */
+      q1Label: "",
+      q2Label: "",
+      q3Label: "",
+
+      /* ラジオボタンのオプション(選択肢) */
+      options: [],
+
+      /* routerのパス */
       prevStepNumber: "",
       nextStepNumber: "STEP3",
     };
   },
   mounted() {
-    /* ラジオボタンのラベルをストアから取得 */
+    /* 質問のラベルをストアのstateから取得 */
     this.q1Label = this.$store.getters.step2Q1Label;
     this.q2Label = this.$store.getters.step2Q2Label;
     this.q3Label = this.$store.getters.step2Q3Label;
 
-    /* ラジオボタンのオプション(選択肢)をストアから取得 */
+    /* ラジオボタンのオプション(選択肢)をストアのstateから取得 */
     this.options = this.$store.getters.step2Options;
   },
   methods: {
-    updateData: function (event) {
-      this.$emit("input", event);
+    /* 質問の値をストアのstateに代入 */
+    updateStep2Q1Value(e) {
+      this.$store.commit("updateStep2Q1Value", e);
+    },
+    updateStep2Q2Value(e) {
+      this.$store.commit("updateStep2Q2Value", e);
+    },
+    updateStep2Q3Value(e) {
+      this.$store.commit("updateStep2Q3Value", e);
     },
   },
-
-  /*  computed: {
-    q1: {
-      set(event) {
-        this.$store.commit("updateStep2Q1Value", event);
-      },
-      get() {
-        return this.$store.getters.getStep2Q1Value;
-      },
-    },
-  }, */
 };
 </script>
