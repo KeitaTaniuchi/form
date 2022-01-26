@@ -9,29 +9,28 @@
         <b-form-group :label="q1Label">
           <b-form-radio-group
             :options="options"
-            @input="updateStep1Q1Value"
+            @input="updateQ1Value"
           ></b-form-radio-group>
         </b-form-group>
 
         <b-form-group class="mt-5" :label="q2Label">
           <b-form-select
-            class="mb-3"
             v-model="yearValue"
             :options="yearsArr"
-            @input="updateStep1Q2Year"
+            @input="updateQ2Year"
           ></b-form-select>
 
           <b-form-select
-            class="mb-3"
+            class="my-3"
             v-model="monthValue"
             :options="monthsArr"
-            @input="updateStep1Q2Month"
+            @input="updateQ2Month"
           ></b-form-select>
 
           <b-form-select
             v-model="dateValue"
             :options="datesArr"
-            @input="updateStep1Q2Date"
+            @input="updateQ2Date"
           ></b-form-select>
         </b-form-group>
       </section>
@@ -75,11 +74,11 @@ export default {
   },
   mounted() {
     /* 質問のラベルをストアのstateから取得 */
-    this.q1Label = this.$store.getters.step1Q1Label;
-    this.q2Label = this.$store.getters.step1Q2Label;
+    this.q1Label = this.$store.getters["step1/q1Label"];
+    this.q2Label = this.$store.getters["step1/q2Label"];
 
     /* ラジオボタンのオプション(選択肢)をストアのstateから取得 */
-    this.options = this.$store.getters.step1Options;
+    this.options = this.$store.getters["step1/options"];
 
     /* セレクトボックスのオプション(選択肢)作成用関数をdefinitionから取得 */
     this.yearsArr = definition.createYears();
@@ -88,17 +87,17 @@ export default {
   },
   methods: {
     /* 質問の値をストアのstateに代入 */
-    updateStep1Q1Value(e) {
-      this.$store.commit("updateStep1Q1Value", e);
+    updateQ1Value(e) {
+      this.$store.commit("step1/updateQ1Value", e);
     },
-    updateStep1Q2Year(e) {
-      this.$store.commit("updateStep1Q2Year", e);
+    updateQ2Year(e) {
+      this.$store.commit("step1/updateQ2Year", e);
     },
-    updateStep1Q2Month(e) {
-      this.$store.commit("updateStep1Q2Month", e);
+    updateQ2Month(e) {
+      this.$store.commit("step1/updateQ2Month", e);
     },
-    updateStep1Q2Date(e) {
-      this.$store.commit("updateStep1Q2Date", e);
+    updateQ2Date(e) {
+      this.$store.commit("step1/updateQ2Date", e);
     },
   },
 

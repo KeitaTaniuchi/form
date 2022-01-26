@@ -7,10 +7,7 @@
     >
       <section>
         <b-form-group :label="q1Label">
-          <b-form-textarea
-            rows="15"
-            @update="updateStep3Q1Value"
-          ></b-form-textarea>
+          <b-form-textarea rows="15" @update="updateQ1Value"></b-form-textarea>
         </b-form-group>
       </section>
     </QuestionContainer>
@@ -41,12 +38,12 @@ export default {
   },
   mounted() {
     /* 質問のラベルをストアのstateから取得 */
-    this.q1Label = this.$store.getters.step3Q1Label;
+    this.q1Label = this.$store.getters["step3/q1Label"];
   },
   methods: {
     /* 質問の値をストアのstateに代入 */
-    updateStep3Q1Value(e) {
-      this.$store.commit("updateStep3Q1Value", e);
+    updateQ1Value(e) {
+      this.$store.commit("step3/updateQ1Value", e);
     },
   },
 };

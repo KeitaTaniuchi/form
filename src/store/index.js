@@ -11,7 +11,6 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    namespaced: true,
     step1,
     step2,
     step3,

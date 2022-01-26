@@ -10,7 +10,7 @@
           <b-form-radio-group
             v-model="q2Show"
             :options="options"
-            @input="updateStep2Q1Value"
+            @input="updateQ1Value"
           ></b-form-radio-group>
         </b-form-group>
 
@@ -18,14 +18,14 @@
           <b-form-radio-group
             v-model="q3Show"
             :options="options"
-            @input="updateStep2Q2Value"
+            @input="updateQ2Value"
           ></b-form-radio-group>
         </b-form-group>
 
         <b-form-group class="mt-5" v-show="q3Show" :label="q3Label">
           <b-form-radio-group
             :options="options"
-            @input="updateStep2Q3Value"
+            @input="updateQ3Value"
           ></b-form-radio-group>
         </b-form-group>
       </section>
@@ -66,23 +66,23 @@ export default {
   },
   mounted() {
     /* 質問のラベルをストアのstateから取得 */
-    this.q1Label = this.$store.getters.step2Q1Label;
-    this.q2Label = this.$store.getters.step2Q2Label;
-    this.q3Label = this.$store.getters.step2Q3Label;
+    this.q1Label = this.$store.getters["step2/q1Label"];
+    this.q2Label = this.$store.getters["step2/q2Label"];
+    this.q3Label = this.$store.getters["step2/q3Label"];
 
     /* ラジオボタンのオプション(選択肢)をストアのstateから取得 */
-    this.options = this.$store.getters.step2Options;
+    this.options = this.$store.getters["step2/options"];
   },
   methods: {
     /* 質問の値をストアのstateに代入 */
-    updateStep2Q1Value(e) {
-      this.$store.commit("updateStep2Q1Value", e);
+    updateQ1Value(e) {
+      this.$store.commit("step2/updateQ1Value", e);
     },
-    updateStep2Q2Value(e) {
-      this.$store.commit("updateStep2Q2Value", e);
+    updateQ2Value(e) {
+      this.$store.commit("step2/updateQ2Value", e);
     },
-    updateStep2Q3Value(e) {
-      this.$store.commit("updateStep2Q3Value", e);
+    updateQ3Value(e) {
+      this.$store.commit("step2/updateQ3Value", e);
     },
   },
 };
