@@ -1,18 +1,20 @@
 "use strict";
 
+/* import definition from "../../utilities/definition"; */
+
 const state = {
   /* 質問のラベル */
-  q1Label: "-性別-",
-  q2Label: "-生年月日-",
+  step1Q1Label: "-性別-",
+  step1Q2Label: "-生年月日-",
 
   /* 質問の値 */
-  q1Value: "",
-  q2Year: "",
-  q2Month: "",
-  q2Date: "",
+  step1Q1Value: "",
+  step1Q2Year: null,
+  step1Q2Month: null,
+  step1Q2Date: null,
 
   /* ラジオボタンのオプション(選択肢) */
-  options: [
+  step1Options: [
     {
       text: "男性",
       value: "男性",
@@ -22,35 +24,39 @@ const state = {
       value: "女性",
     },
   ],
+  /*   step1YearsArr: definition.createYears(),
+  step1MonthsArr: definition.createMonths(),
+  step1DatesArr: definition.createDates(this.step1Q2Year, this.step1Q2Month), */
 };
 
 const getters = {
   /* 質問のラベルをstateから取得 */
-  q1Label: (state) => state.q1Label,
-  q2Label: (state) => state.q2Label,
+  step1Q1Label: (state) => state.step1Q1Label,
+  step1Q2Label: (state) => state.step1Q2Label,
 
   /* 質問の値をstateから取得 */
-  q2Year: (state) => state.q2Year,
-  q2Month: (state) => state.q2Month,
-  q2Date: (state) => state.q2Date,
+  step1Q1Value: (state) => state.step1Q1Value,
+  step1Q2Year: (state) => state.step1Q2Year,
+  step1Q2Month: (state) => state.step1Q2Month,
+  step1Q2Date: (state) => state.step1Q2Date,
 
   /* ラジオボタンのオプション(選択肢)をstateから取得 */
-  options: (state) => state.options,
+  step1Options: (state) => state.step1Options,
 };
 
 const mutations = {
   /* 質問の値をstateに代入 */
-  updateQ1Value(state, value) {
-    state.q1Value = value;
+  updateStep1Q1Value(state, value) {
+    state.step1Q1Value = value;
   },
-  updateQ2Year(state, value) {
-    state.q1Year = value;
+  updateStep1Q2Year(state, value) {
+    state.step1Q2Year = value;
   },
-  updateQ2Month(state, value) {
-    state.q1Month = value;
+  updateStep1Q2Month(state, value) {
+    state.step1Q2Month = value;
   },
-  updateQ2Date(state, value) {
-    state.q1Date = value;
+  updateStep1Q2Date(state, value) {
+    state.step1Q2Date = value;
   },
 };
 

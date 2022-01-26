@@ -6,26 +6,27 @@
       stepNumber="STEP2"
     >
       <section>
-        <b-form-group :label="q1Label">
+        <b-form-group :label="step2Q1Label">
           <b-form-radio-group
-            v-model="q2Show"
-            :options="options"
-            @input="updateQ1Value"
+            :value="step2Q1Value"
+            :options="step2Options"
+            @input="updateStep2Q1Value"
           ></b-form-radio-group>
         </b-form-group>
 
-        <b-form-group class="mt-5" v-show="q2Show" :label="q2Label">
+        <b-form-group class="mt-5" v-show="step2Q1Value" :label="step2Q2Label">
           <b-form-radio-group
-            v-model="q3Show"
-            :options="options"
-            @input="updateQ2Value"
+            :value="step2Q2Value"
+            :options="step2Options"
+            @input="updateStep2Q2Value"
           ></b-form-radio-group>
         </b-form-group>
 
-        <b-form-group class="mt-5" v-show="q3Show" :label="q3Label">
+        <b-form-group class="mt-5" v-show="step2Q2Value" :label="step2Q3Label">
           <b-form-radio-group
-            :options="options"
-            @input="updateQ3Value"
+            :value="step2Q3Value"
+            :options="step2Options"
+            @input="updateStep2Q3Value"
           ></b-form-radio-group>
         </b-form-group>
       </section>
@@ -42,48 +43,40 @@
 import BackToPrevBtn from "../components/BackToPrevBtn.vue";
 import GoNextBtn from "../components/GoNextBtn.vue";
 import QuestionContainer from "../components/QuestionContainer.vue";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "step2",
   components: { BackToPrevBtn, GoNextBtn, QuestionContainer },
   data() {
     return {
-      /* Q2とQ3をv-showで表示 */
-      q2Show: false,
-      q3Show: false,
-
-      /* 質問のラベル */
-      q1Label: "",
-      q2Label: "",
-      q3Label: "",
-
-      /* ラジオボタンのオプション(選択肢) */
-      options: [],
-
       /* routerのパス */
       prevStepNumber: "",
       nextStepNumber: "STEP3",
     };
   },
-  mounted() {
-    /* 質問のラベルをストアのstateから取得 */
-    this.q1Label = this.$store.getters["step2/q1Label"];
-    this.q2Label = this.$store.getters["step2/q2Label"];
-    this.q3Label = this.$store.getters["step2/q3Label"];
+  computed: {
+    ...mapGetters("step2", [
+      /* 質問のラベルをストアのstateから取得 */
+      "step2Q1Label",
+      "step2Q2Label",
+      "step2Q3Label",
 
-    /* ラジオボタンのオプション(選択肢)をストアのstateから取得 */
-    this.options = this.$store.getters["step2/options"];
+      /* 質問の値をストアのstateから取得 */
+      "step2Q1Value",
+      "step2Q2Value",
+      "step2Q3Value",
+
+      /* ラジオボタンのオプション(選択肢)をストアのstateから取得 */
+      "step2Options",
+    ]),
   },
   methods: {
-    /* 質問の値をストアのstateに代入 */
-    updateQ1Value(e) {
-      this.$store.commit("step2/updateQ1Value", e);
-    },
-    updateQ2Value(e) {
-      this.$store.commit("step2/updateQ2Value", e);
-    },
-    updateQ3Value(e) {
-      this.$store.commit("step2/updateQ3Value", e);
-    },
+    ...mapMutations("step2", [
+      /* 質問の値をストアのstateに代入 */
+      "updateStep2Q1Value",
+      "updateStep2Q2Value",
+      "updateStep2Q3Value",
+    ]),
   },
 };
 </script>

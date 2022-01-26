@@ -27,11 +27,12 @@
 </template>
 
 <style scoped>
-p, span {
+p[class*="rounded"],
+span[class*="rounded"] {
   margin: 0 -15px;
 }
 
-p {
+span + p {
   background-color: rgba(0, 123, 255, 0.3);
   font-size: 20px;
 }

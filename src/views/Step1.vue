@@ -6,31 +6,31 @@
       stepNumber="STEP1"
     >
       <section>
-        <b-form-group :label="q1Label">
+        <b-form-group :label="step1Q1Label">
           <b-form-radio-group
-            :options="options"
-            @input="updateQ1Value"
+            :options="step1Options"
+            @input="updateStep1Q1Value"
           ></b-form-radio-group>
         </b-form-group>
 
-        <b-form-group class="mt-5" :label="q2Label">
+        <b-form-group class="mt-5" :label="step1Q2Label">
           <b-form-select
-            v-model="yearValue"
+            v-model="step1Q2Year"
             :options="yearsArr"
-            @input="updateQ2Year"
+            @input="updateStep1Q2Year"
           ></b-form-select>
 
           <b-form-select
             class="my-3"
-            v-model="monthValue"
+            v-model="step1Q2Month"
             :options="monthsArr"
-            @input="updateQ2Month"
+            @input="updateStep1Q2Month"
           ></b-form-select>
 
           <b-form-select
-            v-model="dateValue"
+            v-model="step1Q2Date"
             :options="datesArr"
-            @input="updateQ2Date"
+            @input="updateStep1Q2Date"
           ></b-form-select>
         </b-form-group>
       </section>
@@ -46,72 +46,70 @@
 import GoNextBtn from "../components/GoNextBtn.vue";
 import QuestionContainer from "../components/QuestionContainer.vue";
 import definition from "../utilities/definition";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "step1",
   components: { GoNextBtn, QuestionContainer },
   data() {
     return {
-      /* 質問のラベル */
-      q1Label: "",
-      q2Label: "",
-
-      /* セレクトボックスの現在選択している値 */
-      yearValue: null,
-      monthValue: null,
-      dateValue: null,
-
       /* セレクトボックスのオプション(選択肢) */
       yearsArr: [],
       monthsArr: [],
       datesArr: [],
-
-      /* ラジオボタンのオプション(選択肢) */
-      options: [],
 
       /* routerのパス */
       nextStepNumber: "STEP2",
     };
   },
   mounted() {
-    /* 質問のラベルをストアのstateから取得 */
-    this.q1Label = this.$store.getters["step1/q1Label"];
-    this.q2Label = this.$store.getters["step1/q2Label"];
-
-    /* ラジオボタンのオプション(選択肢)をストアのstateから取得 */
-    this.options = this.$store.getters["step1/options"];
-
     /* セレクトボックスのオプション(選択肢)作成用関数をdefinitionから取得 */
     this.yearsArr = definition.createYears();
     this.monthsArr = definition.createMonths();
     this.datesArr = definition.createDates(this.yearValue, this.monthValue);
   },
+  computed: {
+    ...mapGetters("step1", [
+      /* 質問のラベルをストアのstateから取得 */
+      "step1Q1Label",
+      "step1Q2Label",
+
+      /* 年・月・日の値をストアのstateから取得 */
+      "step1Q2Year",
+      "step1Q2Month",
+      "step1Q2Date",
+
+      /* ラジオボタンのオプション(選択肢)をストアのstateから取得 */
+      "step1Options",
+    ]),
+  },
   methods: {
-    /* 質問の値をストアのstateに代入 */
-    updateQ1Value(e) {
-      this.$store.commit("step1/updateQ1Value", e);
-    },
-    updateQ2Year(e) {
-      this.$store.commit("step1/updateQ2Year", e);
-    },
-    updateQ2Month(e) {
-      this.$store.commit("step1/updateQ2Month", e);
-    },
-    updateQ2Date(e) {
-      this.$store.commit("step1/updateQ2Date", e);
-    },
+    ...mapMutations("step1", [
+      /* 質問の値をストアのstateに代入 */
+      "updateStep1Q1Value",
+      "updateStep1Q2Year",
+      "updateStep1Q2Month",
+      "updateStep1Q2Date",
+    ]),
   },
 
   /* 年と月変更時に、datesArrを再作成
   現在選択中の日が変更後の月に存在しない場合、dateにnullを代入*/
-  watch: {
-    yearValue() {
-      this.datesArr = definition.createDates(this.yearValue, this.monthValue);
-      if (this.dateValue >= this.datesArr.length) this.dateValue = null;
+
+  /* watch: {
+    step1Q2Year() {
+      this.stepQ2Date = definition.createDates(
+        this.step1Q2Year,
+        this.step1Q2Month
+      );
+      if (this.stepQ2Date >= this.datesArr.length) this.stepQ2Date = null;
     },
-    monthValue() {
-      this.datesArr = definition.createDates(this.yearValue, this.monthValue);
-      if (this.dateValue >= this.datesArr.length) this.dateValue = null;
+    step1Q2Month() {
+      this.stepQ2Date = definition.createDates(
+        this.step1Q2Year,
+        this.step1Q2Month
+      );
+      if (this.stepQ2Date >= this.datesArr.length) this.stepQ2Date = null;
     },
-  },
+  }, */
 };
 </script>

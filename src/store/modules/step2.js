@@ -2,19 +2,19 @@
 
 const state = {
   /* 質問のラベル */
-  q1Label: "現在、生命保険に加入されていますか？",
-  q2Label:
-    "現在、入院中ですか？ または,最近3ヶ月以内に医師の診察・検査の結果、入院・手術を勧められたことはありますか？",
-  q3Label:
-    "過去5年以内に病気や怪我で手術を受けたこと、または継続して7日以上の入院をしたことがありますか？",
+  step2Q1Label: "-現在、生命保険に加入されていますか？-",
+  step2Q2Label:
+    "-現在、入院中ですか？  または,最近3ヶ月以内に医師の診察・検査の結果、入院・手術を勧められたことはありますか？-",
+  step2Q3Label:
+    "-過去5年以内に病気や怪我で手術を受けたこと、または継続して7日以上の入院をしたことがありますか？-",
 
   /* 質問の値 */
-  q1Value: "",
-  q2Value: "",
-  q3Value: "",
+  step2Q1Value: "",
+  step2Q2Value: "",
+  step2Q3Value: "",
 
   /* ラジオボタンのオプション(選択肢) */
-  options: [
+  step2Options: [
     {
       text: "はい",
       value: "はい",
@@ -28,29 +28,29 @@ const state = {
 
 const getters = {
   /* 質問のラベルをstateから取得 */
-  q1Label: (state) => state.q1Label,
-  q2Label: (state) => state.q2Label,
-  q3Label: (state) => state.q3Label,
+  step2Q1Label: (state) => state.step2Q1Label,
+  step2Q2Label: (state) => state.step2Q2Label,
+  step2Q3Label: (state) => state.step2Q3Label,
 
   /* 質問の値をstateから取得 */
-  q1Value: (state) => state.q1Value,
-  q2Value: (state) => state.q2Value,
-  q3Value: (state) => state.q3Value,
+  step2Q1Value: (state) => state.step2Q1Value,
+  step2Q2Value: (state) => state.step2Q2Value,
+  step2Q3Value: (state) => state.step2Q3Value,
 
   /* ラジオボタンのオプション(選択肢)をstateから取得 */
-  options: (state) => state.options,
+  step2Options: (state) => state.step2Options,
 };
 
 const mutations = {
   /* 質問の値をstateに代入 */
-  updateQ1Value(state, value) {
-    state.q1Value = value;
+  updateStep2Q1Value(state, value) {
+    state.step2Q1Value = value;
   },
-  updateQ2Value(state, value) {
-    state.q2Value = value;
+  updateStep2Q2Value(state, value) {
+    state.step2Q2Value = value;
   },
-  updateQ3Value(state, value) {
-    state.q3Value = value;
+  updateStep2Q3Value(state, value) {
+    state.step2Q3Value = value;
   },
 };
 
