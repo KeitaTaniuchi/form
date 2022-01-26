@@ -1,7 +1,7 @@
+"use strict";
+
 import dayjs from "dayjs";
 dayjs.locale("ja");
-const isLeapYear = require("dayjs/plugin/isLeapYear");
-dayjs.extend(isLeapYear);
 
 const createYears = () => {
   const yearsArr = [
@@ -39,7 +39,7 @@ const createMonths = () => {
   return monthsArr;
 };
 
-const createDates = (thisYear, thisMonth) => {
+const createDates = (year, month) => {
   const datesArr = [
     {
       value: null,
@@ -49,18 +49,12 @@ const createDates = (thisYear, thisMonth) => {
   ];
 
   /* 初期値 */
-  if (thisYear === null || thisMonth === null)
+  if (year === null || month === null)
     for (let i = 1; i <= 31; i++) {
       datesArr.push({ value: i, text: `${i}日` });
     }
-
-  /* 年と月選択後 */ 
-  else
-    for (
-      let i = 1;
-      i <= dayjs(`'${thisYear}-${thisMonth}-01'`).daysInMonth();
-      i++
-    ) {
+  /* 年と月選択後 */ else
+    for (let i = 1; i <= dayjs(`'${year}-${month}-01'`).daysInMonth(); i++) {
       datesArr.push({ value: i, text: `${i}日` });
     }
   return datesArr;

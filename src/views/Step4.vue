@@ -12,7 +12,7 @@
         <p>{{ step1Q2Label }}</p>
         <p>
           <span>{{ step1Q2Year }}年</span>
-          <span>{{ step1Q2Month }}月</span>
+          <span class="mx-2">{{ step1Q2Month }}月</span>
           <span>{{ step1Q2Date }}日</span>
         </p>
 
@@ -42,9 +42,6 @@ p:nth-of-type(odd) {
   color: rgba(0, 123, 255);
   margin: 30px 0 5px 0;
 }
-span {
-  margin-right: 10px;
-}
 </style>
 
 <script>
@@ -62,6 +59,7 @@ export default {
     };
   },
   computed: {
+    /* 各STEPの質問のラベルと値をストアのstateから取得 */
     ...mapGetters("step1", [
       "step1Q1Label",
       "step1Q2Label",

@@ -1,6 +1,6 @@
 "use strict";
 
-/* import definition from "../../utilities/definition"; */
+import definition from "../../utilities/definition";
 
 const state = {
   /* 質問のラベル */
@@ -24,9 +24,11 @@ const state = {
       value: "女性",
     },
   ],
-  /*   step1YearsArr: definition.createYears(),
+
+  /* セレクトボックスのオプション(選択肢) */
+  step1YearsArr: definition.createYears(),
   step1MonthsArr: definition.createMonths(),
-  step1DatesArr: definition.createDates(this.step1Q2Year, this.step1Q2Month), */
+  step1DatesArr: definition.createDates(),
 };
 
 const getters = {
@@ -42,6 +44,11 @@ const getters = {
 
   /* ラジオボタンのオプション(選択肢)をstateから取得 */
   step1Options: (state) => state.step1Options,
+
+  /* セレクトボックスのオプション(選択肢)をstateから取得 */
+  step1YearsArr: (state) => state.step1YearsArr,
+  step1MonthsArr: (state) => state.step1MonthsArr,
+  step1DatesArr: (state) => state.step1DatesArr,
 };
 
 const mutations = {
@@ -50,14 +57,25 @@ const mutations = {
     state.step1Q1Value = value;
   },
   updateStep1Q2Year(state, value) {
+    updateStep1DatesArr(state, value, state.step1Q2Month);
     state.step1Q2Year = value;
   },
   updateStep1Q2Month(state, value) {
+    updateStep1DatesArr(state, state.step1Q2Year, value);
     state.step1Q2Month = value;
   },
   updateStep1Q2Date(state, value) {
     state.step1Q2Date = value;
   },
+};
+
+const updateStep1DatesArr = (state, year, month) => {
+  /* 年もしくは月変更時にstep1DatesArrを再作成 */
+  if (year !== state.step1Q2Year || month !== state.step1Q2Month)
+    state.step1DatesArr = definition.createDates(year, month);
+
+  /* 現在選択中の日が変更後の月に存在しない場合、step1Q2Dateにnullを代入 */
+  if (state.step1Q2Date >= state.step1DatesArr.length) state.step1Q2Date = null;
 };
 
 export default {
