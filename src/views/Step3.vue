@@ -17,8 +17,8 @@
     </QuestionContainer>
 
     <div class="text-center">
-      <BackToPrevBtn :stepNumber="prevStepNumber" />
-      <GoNextBtn :stepNumber="nextStepNumber" />
+      <BackToPrevBtn />
+      <GoNextBtn />
     </div>
   </div>
 </template>
@@ -31,13 +31,6 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "step3",
   components: { BackToPrevBtn, GoNextBtn, QuestionContainer },
-  data() {
-    return {
-      /* routerのパス */
-      prevStepNumber: "STEP2",
-      nextStepNumber: "STEP4",
-    };
-  },
   computed: {
     ...mapGetters("step3", [
       /* 質問のラベルをストアのstateから取得 */

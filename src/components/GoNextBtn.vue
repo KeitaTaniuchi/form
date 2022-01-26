@@ -2,7 +2,7 @@
   <button
     type="button"
     class="mt-3 mx-3 btn btn-primary"
-    @click="() => $router.push(`/${stepNumber}`)"
+    @click="() => $router.push(path)"
   >
     次に進む >
   </button>
@@ -10,11 +10,16 @@
 
 <script>
 export default {
-  props: {
-    stepNumber: {
-      type: String,
-      required: true,
-    },
+  data() {
+    return {
+      path: "",
+    };
+  },
+  mounted() {
+    if (this.$route.path === "/") this.path = "/STEP2";
+    else if (this.$route.path === "/STEP2") this.path = "/STEP3";
+    else if (this.$route.path === "/STEP3") this.path = "/STEP4";
+    else this.path = "/";
   },
 };
 </script>
