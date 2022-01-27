@@ -9,6 +9,7 @@
         <b-form-group :label="step3Q1Label">
           <b-form-textarea
             rows="15"
+            placeholder="ご相談内容があれば、こちらに入力してください"
             :value="step3Q1Value"
             @update="updateStep3Q1Value"
           ></b-form-textarea>

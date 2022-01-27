@@ -8,7 +8,7 @@
       <section>
         <b-form-group :label="step2Q1Label">
           <b-form-radio-group
-            :value="step2Q1Value"
+            :checked="step2Q1Value"
             :options="step2Options"
             @input="updateStep2Q1Value"
           ></b-form-radio-group>
@@ -16,7 +16,7 @@
 
         <b-form-group class="mt-5" v-show="step2Q1Value" :label="step2Q2Label">
           <b-form-radio-group
-            :value="step2Q2Value"
+            :checked="step2Q2Value"
             :options="step2Options"
             @input="updateStep2Q2Value"
           ></b-form-radio-group>
@@ -24,7 +24,7 @@
 
         <b-form-group class="mt-5" v-show="step2Q2Value" :label="step2Q3Label">
           <b-form-radio-group
-            :value="step2Q3Value"
+            :checked="step2Q3Value"
             :options="step2Options"
             @input="updateStep2Q3Value"
           ></b-form-radio-group>

@@ -8,7 +8,7 @@
       <section>
         <b-form-group :label="step1Q1Label">
           <b-form-radio-group
-            :value="step1Q1Value"
+            :checked="step1Q1Value"
             :options="step1Options"
             @input="updateStep1Q1Value"
           ></b-form-radio-group>
