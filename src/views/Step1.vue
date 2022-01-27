@@ -13,6 +13,9 @@
             @input="updateStep1Q1Value"
           ></b-form-radio-group>
         </b-form-group>
+        <p class="mt-2 text-danger" v-if="!$v.step1Q1Value.required">
+          性別を選択してください
+        </p>
 
         <b-form-group class="mt-5" :label="step1Q2Label">
           <b-form-select
@@ -20,19 +23,29 @@
             :options="step1YearsArr"
             @input="updateStep1Q2Year"
           ></b-form-select>
+          <p class="mt-2 text-danger" v-if="!$v.step1Q2Year.required">
+            年を選択してください
+          </p>
 
           <b-form-select
-            class="my-3"
+            class="mt-3"
             :value="step1Q2Month"
             :options="step1MonthsArr"
             @input="updateStep1Q2Month"
           ></b-form-select>
+          <p class="mt-2 text-danger" v-if="!$v.step1Q2Month.required">
+            月を選択してください
+          </p>
 
           <b-form-select
+            class="mt-3"
             :value="step1Q2Date"
             :options="step1DatesArr"
             @input="updateStep1Q2Date"
           ></b-form-select>
+          <p class="mt-2 text-danger" v-if="!$v.step1Q2Date.required">
+            日を選択してください
+          </p>
         </b-form-group>
       </section>
     </QuestionContainer>
@@ -47,6 +60,7 @@
 import GoNextBtn from "../components/GoNextBtn.vue";
 import QuestionContainer from "../components/QuestionContainer.vue";
 import { mapGetters, mapMutations } from "vuex";
+import { required } from "vuelidate/lib/validators";
 export default {
   name: "step1",
   components: { GoNextBtn, QuestionContainer },
@@ -79,6 +93,12 @@ export default {
       "updateStep1Q2Month",
       "updateStep1Q2Date",
     ]),
+  },
+  validations: {
+    step1Q1Value: { required },
+    step1Q2Year: { required },
+    step1Q2Month: { required },
+    step1Q2Date: { required },
   },
 };
 </script>
