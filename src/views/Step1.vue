@@ -11,19 +11,21 @@
             :checked="step1Q1Value"
             :options="step1Options"
             @input="updateStep1Q1Value"
+            @blur="$v.step1Q1Value.$touch()"
           ></b-form-radio-group>
+          <p class="mt-1 text-danger" v-show="$v.step1Q1Value.$error">
+            性別を選択してください
+          </p>
         </b-form-group>
-        <p class="mt-2 text-danger" v-if="!$v.step1Q1Value.required">
-          性別を選択してください
-        </p>
 
         <b-form-group class="mt-5" :label="step1Q2Label">
           <b-form-select
             :value="step1Q2Year"
             :options="step1YearsArr"
             @input="updateStep1Q2Year"
+            @blur="$v.step1Q2Year.$touch()"
           ></b-form-select>
-          <p class="mt-2 text-danger" v-if="!$v.step1Q2Year.required">
+          <p class="mt-1 text-danger" v-show="$v.step1Q2Year.$error">
             年を選択してください
           </p>
 
@@ -32,8 +34,9 @@
             :value="step1Q2Month"
             :options="step1MonthsArr"
             @input="updateStep1Q2Month"
+            @blur="$v.step1Q2Month.$touch()"
           ></b-form-select>
-          <p class="mt-2 text-danger" v-if="!$v.step1Q2Month.required">
+          <p class="mt-1 text-danger" v-show="$v.step1Q2Month.$error">
             月を選択してください
           </p>
 
@@ -42,8 +45,9 @@
             :value="step1Q2Date"
             :options="step1DatesArr"
             @input="updateStep1Q2Date"
+            @blur="$v.step1Q2Date.$touch()"
           ></b-form-select>
-          <p class="mt-2 text-danger" v-if="!$v.step1Q2Date.required">
+          <p class="mt-2 text-danger" v-show="$v.step1Q2Date.$error">
             日を選択してください
           </p>
         </b-form-group>
@@ -51,7 +55,8 @@
     </QuestionContainer>
 
     <div class="text-center">
-      <GoNextBtn />
+      <GoNextBtn @click="validateTest" />
+      <button @click="validateTest">validateテスト</button>
     </div>
   </div>
 </template>
@@ -93,6 +98,15 @@ export default {
       "updateStep1Q2Month",
       "updateStep1Q2Date",
     ]),
+    validateTest() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        console.log("バリデーションエラー");
+      } else {
+        // データ登録の処理をここに記述
+        console.log("submit");
+      }
+    },
   },
   validations: {
     step1Q1Value: { required },
