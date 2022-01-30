@@ -30,9 +30,13 @@
       </section>
     </QuestionContainer>
 
-    <div class="text-center">
-      <BackToPrevBtn />
-      <GoNextBtn />
+    <div class="mt-3 text-center">
+      <b-button class="mx-2" b-button variant="primary" @click="backToPrevPage"
+        >前に戻る >
+      </b-button>
+      <b-button class="mx-2" b-button variant="primary" @click="goNextPage"
+        >次に進む >
+      </b-button>
     </div>
   </div>
 </template>
@@ -45,13 +49,12 @@ p:nth-of-type(odd) {
 </style>
 
 <script>
-import BackToPrevBtn from "../components/BackToPrevBtn.vue";
-import GoNextBtn from "../components/GoNextBtn.vue";
 import QuestionContainer from "../components/QuestionContainer.vue";
+import screenTransitionBtn from "../utilities/screen-transition-btn";
 import { mapGetters } from "vuex";
 export default {
   name: "step4",
-  components: { BackToPrevBtn, GoNextBtn, QuestionContainer },
+  components: { QuestionContainer },
   computed: {
     /* 各STEPの質問のラベルと値をストアのstateから取得 */
     ...mapGetters("step1", [
@@ -71,6 +74,23 @@ export default {
       "step2Q3Value",
     ]),
     ...mapGetters("step3", ["step3Q1Label", "step3Q1Value"]),
+  },
+  methods: {
+    /* 「次に進む」ボタンを押した際、次のページに進む関数 */
+    goNextPage() {
+      const nextPagePath = screenTransitionBtn.getNextPagePath(
+        this.$route.path
+      );
+      this.$router.push(nextPagePath);
+    },
+
+    /* 「前に戻る」ボタンを押した際、前のページに戻る関数 */
+    backToPrevPage() {
+      const prevPagePath = screenTransitionBtn.getPrevPagePath(
+        this.$route.path
+      );
+      this.$router.push(prevPagePath);
+    },
   },
 };
 </script>

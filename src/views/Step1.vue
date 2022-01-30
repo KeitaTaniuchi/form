@@ -11,9 +11,8 @@
             :checked="step1Q1Value"
             :options="step1Options"
             @input="updateStep1Q1Value"
-            @blur="$v.step1Q1Value.$touch()"
           ></b-form-radio-group>
-          <p class="mt-1 text-danger" v-show="$v.step1Q1Value.$error">
+          <p class="mt-2 text-danger" v-show="$v.step1Q1Value.$error">
             性別を選択してください
           </p>
         </b-form-group>
@@ -23,9 +22,8 @@
             :value="step1Q2Year"
             :options="step1YearsArr"
             @input="updateStep1Q2Year"
-            @blur="$v.step1Q2Year.$touch()"
           ></b-form-select>
-          <p class="mt-1 text-danger" v-show="$v.step1Q2Year.$error">
+          <p class="mt-2 text-danger" v-show="$v.step1Q2Year.$error">
             年を選択してください
           </p>
 
@@ -34,9 +32,8 @@
             :value="step1Q2Month"
             :options="step1MonthsArr"
             @input="updateStep1Q2Month"
-            @blur="$v.step1Q2Month.$touch()"
           ></b-form-select>
-          <p class="mt-1 text-danger" v-show="$v.step1Q2Month.$error">
+          <p class="mt-2 text-danger" v-show="$v.step1Q2Month.$error">
             月を選択してください
           </p>
 
@@ -45,7 +42,6 @@
             :value="step1Q2Date"
             :options="step1DatesArr"
             @input="updateStep1Q2Date"
-            @blur="$v.step1Q2Date.$touch()"
           ></b-form-select>
           <p class="mt-2 text-danger" v-show="$v.step1Q2Date.$error">
             日を選択してください
@@ -54,21 +50,22 @@
       </section>
     </QuestionContainer>
 
-    <div class="text-center">
-      <GoNextBtn @click="validateTest" />
-      <button @click="validateTest">validateテスト</button>
+    <div class="mt-3 text-center">
+      <b-button b-button variant="primary" @click="goNextPage"
+        >次に進む >
+      </b-button>
     </div>
   </div>
 </template>
 
 <script>
-import GoNextBtn from "../components/GoNextBtn.vue";
 import QuestionContainer from "../components/QuestionContainer.vue";
+import screenTransitionBtn from "../utilities/screen-transition-btn";
 import { mapGetters, mapMutations } from "vuex";
 import { required } from "vuelidate/lib/validators";
 export default {
   name: "step1",
-  components: { GoNextBtn, QuestionContainer },
+  components: { QuestionContainer },
   computed: {
     ...mapGetters("step1", [
       /* 質問のラベルをストアのstateから取得 */
@@ -98,13 +95,15 @@ export default {
       "updateStep1Q2Month",
       "updateStep1Q2Date",
     ]),
-    validateTest() {
+
+    /* 「次に進む」ボタンを押した際、全ての質問に回答していた場合のみ次のページに進む関数 */
+    goNextPage() {
       this.$v.$touch();
-      if (this.$v.$invalid) {
-        console.log("バリデーションエラー");
-      } else {
-        // データ登録の処理をここに記述
-        console.log("submit");
+      if (!this.$v.$invalid) {
+        const nextPagePath = screenTransitionBtn.getNextPagePath(
+          this.$route.path
+        );
+        this.$router.push(nextPagePath);
       }
     },
   },
