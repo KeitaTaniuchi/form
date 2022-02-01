@@ -54,39 +54,49 @@
 
 <script>
 import QuestionContainer from "../components/QuestionContainer.vue";
+import questionLabels from "../utilities/question-labels";
 import screenTransitionBtn from "../utilities/screen-transition-btn";
 import { mapGetters, mapMutations } from "vuex";
 import { required } from "vuelidate/lib/validators";
 export default {
   name: "step2",
   components: { QuestionContainer },
+  data() {
+    return {
+      step2Q1Label: "",
+      step2Q2Label: "",
+      step2Q3Label: "",
+
+      /* ラジオボタンのオプション(選択肢) */
+      step2Options: [
+        {
+          text: "はい",
+          value: "はい",
+        },
+        {
+          text: "いいえ",
+          value: "いいえ",
+        },
+      ],
+    };
+  },
+  mounted() {
+    this.step2Q1Label = questionLabels.questionLabels.step2.q1;
+    this.step2Q2Label = questionLabels.questionLabels.step2.q2;
+    this.step2Q3Label = questionLabels.questionLabels.step2.q3;
+  },
   computed: {
-    ...mapGetters("step2", [
-      /* 質問のラベルをストアのstateから取得 */
-      "step2Q1Label",
-      "step2Q2Label",
-      "step2Q3Label",
-
-      /* 質問の値をストアのstateから取得 */
-      "step2Q1Value",
-      "step2Q2Value",
-      "step2Q3Value",
-
-      /* ラジオボタンのオプション(選択肢)をストアのstateから取得 */
-      "step2Options",
-    ]),
+    ...mapGetters("step2", ["step2Q1Value", "step2Q2Value", "step2Q3Value"]),
   },
   methods: {
     ...mapMutations("step2", [
-      /* 質問の値をストアのstateに代入 */
       "updateStep2Q1Value",
       "updateStep2Q2Value",
       "updateStep2Q3Value",
     ]),
-
-    /* 「次に進む」ボタンを押した際、全ての質問に回答していた場合のみ次のページに進む関数 */
     goNextPage() {
       this.$v.$touch();
+      /* 全ての質問に回答していた場合のみ次のページに進む */
       if (!this.$v.$invalid) {
         const nextPagePath = screenTransitionBtn.getNextPagePath(
           this.$route.path
@@ -94,8 +104,6 @@ export default {
         this.$router.push(nextPagePath);
       }
     },
-
-    /* 「前に戻る」ボタンを押した際、前のページに戻る関数 */
     backToPrevPage() {
       const prevPagePath = screenTransitionBtn.getPrevPagePath(
         this.$route.path

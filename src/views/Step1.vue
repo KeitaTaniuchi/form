@@ -61,50 +61,87 @@
 <script>
 import QuestionContainer from "../components/QuestionContainer.vue";
 import screenTransitionBtn from "../utilities/screen-transition-btn";
+import questionLabels from "../utilities/question-labels";
+import definition from "../utilities/definition";
 import { mapGetters, mapMutations } from "vuex";
 import { required } from "vuelidate/lib/validators";
 export default {
   name: "step1",
   components: { QuestionContainer },
+  data() {
+    return {
+      step1Q1Label: "",
+      step1Q2Label: "",
+
+      /* ラジオボタンのオプション(選択肢) */
+      step1Options: [
+        {
+          text: "男性",
+          value: "男性",
+        },
+        {
+          text: "女性",
+          value: "女性",
+        },
+      ],
+
+      /* セレクトボックスのオプション(選択肢) */
+      step1YearsArr: [],
+      step1MonthsArr: [],
+      step1DatesArr: [],
+    };
+  },
+  mounted() {
+    this.step1Q1Label = questionLabels.questionLabels.step1.q1;
+    this.step1Q2Label = questionLabels.questionLabels.step1.q2;
+    this.step1YearsArr = definition.createYears();
+    this.step1MonthsArr = definition.createMonths();
+    this.step1DatesArr = definition.createDates();
+  },
   computed: {
     ...mapGetters("step1", [
-      /* 質問のラベルをストアのstateから取得 */
-      "step1Q1Label",
-      "step1Q2Label",
-
-      /* 質問の値をストアのstateから取得 */
       "step1Q1Value",
       "step1Q2Year",
       "step1Q2Month",
       "step1Q2Date",
-
-      /* ラジオボタンのオプション(選択肢)をストアのstateから取得 */
-      "step1Options",
-
-      /* セレクトボックスのオプション(選択肢)をストアのstateから取得 */
-      "step1YearsArr",
-      "step1MonthsArr",
-      "step1DatesArr",
     ]),
   },
   methods: {
     ...mapMutations("step1", [
-      /* 質問の値をストアのstateに代入 */
       "updateStep1Q1Value",
       "updateStep1Q2Year",
       "updateStep1Q2Month",
       "updateStep1Q2Date",
     ]),
-
-    /* 「次に進む」ボタンを押した際、全ての質問に回答していた場合のみ次のページに進む関数 */
     goNextPage() {
       this.$v.$touch();
+      /* 全ての質問に回答していた場合のみ次のページに進む */
       if (!this.$v.$invalid) {
         const nextPagePath = screenTransitionBtn.getNextPagePath(
           this.$route.path
         );
         this.$router.push(nextPagePath);
       }
+    },
+  },
+  watch: {
+    step1Q2Year: function () {
+      this.step1DatesArr = definition.createDates(
+        this.step1Q2Year,
+        this.step1Q2Month
+      );
+      /* 現在選択中の日が変更後の月に存在しない場合、ストアのstateにnullを代入する関数を呼び出す*/
+      if (this.step1Q2Date >= this.step1DatesArr.length)
+        this.$store.commit("step1/assignNullStep1Q2Date");
+    },
+    step1Q2Month: function () {
+      this.step1DatesArr = definition.createDates(
+        this.step1Q2Year,
+        this.step1Q2Month
+      );
+      /* 現在選択中の日が変更後の月に存在しない場合、ストアのstateにnullを代入する関数を呼び出す*/
+      if (this.step1Q2Date >= this.step1DatesArr.length)
+        this.$store.commit("step1/assignNullStep1Q2Date");
     },
   },
   validations: {

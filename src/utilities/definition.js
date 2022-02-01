@@ -47,7 +47,6 @@ const createDates = (year, month) => {
       disabled: true,
     },
   ];
-
   /* 初期値 */
   if (year === null || month === null)
     for (let i = 1; i <= 31; i++) {

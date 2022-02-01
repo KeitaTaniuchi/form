@@ -30,35 +30,31 @@
 
 <script>
 import QuestionContainer from "../components/QuestionContainer.vue";
+import questionLabels from "../utilities/question-labels";
 import screenTransitionBtn from "../utilities/screen-transition-btn";
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "step3",
   components: { QuestionContainer },
+  data() {
+    return {
+      step3Q1Label: "",
+    };
+  },
+  mounted() {
+    this.step3Q1Label = questionLabels.questionLabels.step3.q1;
+  },
   computed: {
-    ...mapGetters("step3", [
-      /* 質問のラベルをストアのstateから取得 */
-      "step3Q1Label",
-
-      /* 質問の値をストアのstateから取得 */
-      "step3Q1Value",
-    ]),
+    ...mapGetters("step3", ["step3Q1Value"]),
   },
   methods: {
-    ...mapMutations("step3", [
-      /* 質問の値をストアのstateに代入 */
-      "updateStep3Q1Value",
-    ]),
-
-    /* 「次に進む」ボタンを押した際、次のページに進む関数 */
+    ...mapMutations("step3", ["updateStep3Q1Value"]),
     goNextPage() {
       const nextPagePath = screenTransitionBtn.getNextPagePath(
         this.$route.path
       );
       this.$router.push(nextPagePath);
     },
-
-    /* 「前に戻る」ボタンを押した際、前のページに戻る関数 */
     backToPrevPage() {
       const prevPagePath = screenTransitionBtn.getPrevPagePath(
         this.$route.path

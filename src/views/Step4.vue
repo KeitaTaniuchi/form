@@ -50,41 +50,47 @@ p:nth-of-type(odd) {
 
 <script>
 import QuestionContainer from "../components/QuestionContainer.vue";
+import questionLabels from "../utilities/question-labels";
 import screenTransitionBtn from "../utilities/screen-transition-btn";
 import { mapGetters } from "vuex";
 export default {
   name: "step4",
   components: { QuestionContainer },
+  data() {
+    return {
+      step1Q1Label: "",
+      step1Q2Label: "",
+      step2Q1Label: "",
+      step2Q2Label: "",
+      step2Q3Label: "",
+      step3Q1Label: "",
+    };
+  },
+  mounted() {
+    this.step1Q1Label = questionLabels.questionLabels.step1.q1;
+    this.step1Q2Label = questionLabels.questionLabels.step1.q2;
+    this.step2Q1Label = questionLabels.questionLabels.step2.q1;
+    this.step2Q2Label = questionLabels.questionLabels.step2.q2;
+    this.step2Q3Label = questionLabels.questionLabels.step2.q3;
+    this.step3Q1Label = questionLabels.questionLabels.step3.q1;
+  },
   computed: {
-    /* 各STEPの質問のラベルと値をストアのstateから取得 */
     ...mapGetters("step1", [
-      "step1Q1Label",
-      "step1Q2Label",
       "step1Q1Value",
       "step1Q2Year",
       "step1Q2Month",
       "step1Q2Date",
     ]),
-    ...mapGetters("step2", [
-      "step2Q1Label",
-      "step2Q2Label",
-      "step2Q3Label",
-      "step2Q1Value",
-      "step2Q2Value",
-      "step2Q3Value",
-    ]),
-    ...mapGetters("step3", ["step3Q1Label", "step3Q1Value"]),
+    ...mapGetters("step2", ["step2Q1Value", "step2Q2Value", "step2Q3Value"]),
+    ...mapGetters("step3", ["step3Q1Value"]),
   },
   methods: {
-    /* 「次に進む」ボタンを押した際、次のページに進む関数 */
     goNextPage() {
       const nextPagePath = screenTransitionBtn.getNextPagePath(
         this.$route.path
       );
       this.$router.push(nextPagePath);
     },
-
-    /* 「前に戻る」ボタンを押した際、前のページに戻る関数 */
     backToPrevPage() {
       const prevPagePath = screenTransitionBtn.getPrevPagePath(
         this.$route.path
