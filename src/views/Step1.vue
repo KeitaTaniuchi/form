@@ -6,79 +6,149 @@
       stepNumber="STEP1"
     >
       <section>
-        <RadioBtn label="-性別-" :options="options" />
+        <b-form-group :label="step1Q1Label">
+          <b-form-radio-group
+            :checked="step1Q1Value"
+            :options="step1Options"
+            @input="updateStep1Q1Value"
+          ></b-form-radio-group>
+          <p class="mt-2 text-danger" v-show="$v.step1Q1Value.$error">
+            性別を選択してください
+          </p>
+        </b-form-group>
 
-        <b-form-group class="mt-5" label="-生年月日-">
+        <b-form-group class="mt-5" :label="step1Q2Label">
           <b-form-select
-            v-model="year"
-            :options="yearsArr"
-            class="mb-3"
+            :value="step1Q2Year"
+            :options="step1YearsArr"
+            @input="updateStep1Q2Year"
           ></b-form-select>
+          <p class="mt-2 text-danger" v-show="$v.step1Q2Year.$error">
+            年を選択してください
+          </p>
+
           <b-form-select
-            v-model="month"
-            :options="monthsArr"
-            class="mb-3"
+            class="mt-3"
+            :value="step1Q2Month"
+            :options="step1MonthsArr"
+            @input="updateStep1Q2Month"
           ></b-form-select>
+          <p class="mt-2 text-danger" v-show="$v.step1Q2Month.$error">
+            月を選択してください
+          </p>
+
           <b-form-select
-            v-model="date" 
-            :options="datesArr"
+            class="mt-3"
+            :value="step1Q2Date"
+            :options="step1DatesArr"
+            @input="updateStep1Q2Date"
           ></b-form-select>
+          <p class="mt-2 text-danger" v-show="$v.step1Q2Date.$error">
+            日を選択してください
+          </p>
         </b-form-group>
       </section>
     </QuestionContainer>
 
-    <div class="text-center">
-      <GoNextBtn :stepNumber="nextStepNumber" />
+    <div class="mt-3 text-center">
+      <b-button b-button variant="primary" @click="goNextPage"
+        >次に進む >
+      </b-button>
     </div>
   </div>
 </template>
 
 <script>
-import GoNextBtn from "../components/GoNextBtn.vue";
 import QuestionContainer from "../components/QuestionContainer.vue";
-import RadioBtn from "../components/RadioBtn.vue";
+import screenTransitionBtn from "../utilities/screen-transition-btn";
+import questionLabels from "../utilities/question-labels";
 import definition from "../utilities/definition";
+import { mapGetters, mapMutations } from "vuex";
+import { required } from "vuelidate/lib/validators";
 export default {
   name: "step1",
-  components: { GoNextBtn, QuestionContainer, RadioBtn },
+  components: { QuestionContainer },
   data() {
     return {
-      nextStepNumber: "STEP2",
-      year: null,
-      month: null,
-      date: null,
-      yearsArr: [],
-      monthsArr: [],
-      datesArr: [],
-      options: [
+      step1Q1Label: "",
+      step1Q2Label: "",
+
+      /* ラジオボタンのオプション(選択肢) */
+      step1Options: [
         {
           text: "男性",
-          value: "1",
+          value: "男性",
         },
         {
           text: "女性",
-          value: "2",
+          value: "女性",
         },
       ],
+
+      /* セレクトボックスのオプション(選択肢) */
+      step1YearsArr: [],
+      step1MonthsArr: [],
+      step1DatesArr: [],
     };
   },
   mounted() {
-    this.yearsArr = definition.createYears();
-    this.monthsArr = definition.createMonths();
-    this.datesArr = definition.createDates(this.year, this.month);
+    this.step1Q1Label = questionLabels.questionLabels.step1.q1;
+    this.step1Q2Label = questionLabels.questionLabels.step1.q2;
+    this.step1YearsArr = definition.createYears();
+    this.step1MonthsArr = definition.createMonths();
+    this.step1DatesArr = definition.createDates();
   },
-  
-  /* 年と月変更時に、datesArrを再作成
-  現在選択中の日が変更後の月に存在しない場合、dateにnullを代入*/
+  computed: {
+    ...mapGetters("step1", [
+      "step1Q1Value",
+      "step1Q2Year",
+      "step1Q2Month",
+      "step1Q2Date",
+    ]),
+  },
+  methods: {
+    ...mapMutations("step1", [
+      "updateStep1Q1Value",
+      "updateStep1Q2Year",
+      "updateStep1Q2Month",
+      "updateStep1Q2Date",
+    ]),
+    goNextPage() {
+      this.$v.$touch();
+      /* 全ての質問に回答していた場合のみ次のページに進む */
+      if (!this.$v.$invalid) {
+        const nextPagePath = screenTransitionBtn.getNextPagePath(
+          this.$route.path
+        );
+        this.$router.push(nextPagePath);
+      }
+    },
+  },
   watch: {
-    year: function () {
-      this.datesArr = definition.createDates(this.year, this.month);
-      if (this.date >= this.datesArr.length) this.date = null;
+    step1Q2Year: function () {
+      this.step1DatesArr = definition.createDates(
+        this.step1Q2Year,
+        this.step1Q2Month
+      );
+      /* 現在選択中の日が変更後の月に存在しない場合、ストアのstateにnullを代入する関数を呼び出す*/
+      if (this.step1Q2Date >= this.step1DatesArr.length)
+        this.$store.commit("step1/assignNullStep1Q2Date");
     },
-    month: function () {
-      this.datesArr = definition.createDates(this.year, this.month);
-      if (this.date >= this.datesArr.length) this.date = null;
+    step1Q2Month: function () {
+      this.step1DatesArr = definition.createDates(
+        this.step1Q2Year,
+        this.step1Q2Month
+      );
+      /* 現在選択中の日が変更後の月に存在しない場合、ストアのstateにnullを代入する関数を呼び出す*/
+      if (this.step1Q2Date >= this.step1DatesArr.length)
+        this.$store.commit("step1/assignNullStep1Q2Date");
     },
+  },
+  validations: {
+    step1Q1Value: { required },
+    step1Q2Year: { required },
+    step1Q2Month: { required },
+    step1Q2Date: { required },
   },
 };
 </script>
